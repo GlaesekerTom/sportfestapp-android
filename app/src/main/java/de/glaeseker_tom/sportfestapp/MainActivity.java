@@ -1,9 +1,8 @@
 package de.glaeseker_tom.sportfestapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,12 +15,16 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FragmentManager fragmentManager;
+    private String url = "http://192.168.20.30:80/sportfest/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        fragmentManager = getFragmentManager();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,20 +77,52 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_soccer) {
+            TableFragment frag = new TableFragment();
+            frag.setTableType("soccer");
+            frag.setServerURL(url);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main,frag,"tableSoccer");
+            transaction.commit();
+        } else if (id == R.id.nav_volleyball) {
+            TableFragment frag = new TableFragment();
+            frag.setTableType("volleyball");
+            frag.setServerURL(url);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main,frag,"tableVolleyball");
+            transaction.commit();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_badminton) {
 
-        } else if (id == R.id.nav_manage) {
+            TableFragment frag = new TableFragment();
+            frag.setTableType("badminton");
+            frag.setServerURL(url);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main,frag,"tableBadminton");
+            transaction.commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_hockey) {
+            TableFragment frag = new TableFragment();
+            frag.setTableType("hockey");
+            frag.setServerURL(url);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main, frag, "tableHockey");
+            transaction.commit();
 
-        } else if (id == R.id.nav_send) {
+        }/*else if ( id == R.id.nav_placement){
+            String[] table = {"Soccer","Volleyball","Badminton", "Hockey","Icehockey"};
+          // PlacementFragment frag = new PlacementFragment(table);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+           // transaction.add(R.id.content_main, frag, "tableHockey");
+            transaction.commit();
+        }*/
+        else if (id == R.id.nav_managesports) {
 
         }
+        else if (id== R.id.nav_announcement){
 
+        }
+        //Nach dem eine Auswahl gemacht wurde wird NavigationBar wieder geschlossen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="Spielpläne">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_soccer"
+                    android:icon="@drawable/ic_menu_soccer2"
+                    android:title="Fußball" />
+                <item
+                    android:id="@+id/nav_volleyball"
+                    android:icon="@drawable/ic_menu_volleyball"
+                    android:title="Volleyball" />
+                <item
+                    android:id="@+id/nav_badminton"
+                    android:icon="@drawable/ic_menu_badminton"
+                    android:title="Badminton" />
+                <item
+                    android:id="@+id/nav_hockey"
+                    android:icon="@drawable/ic_menu_hockey"
+                    android:title="Hockey" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Anderes">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_placement"
+                    android:icon="@drawable/ic_menu_placement"
+                    android:title="Platzierung" />
+                <item
+                    android:id="@+id/nav_totalplacement"
+                    android:icon="@drawable/ic_menu_totalplacement"
+                    android:title="Gesamtplatzierung" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Administration">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_managesports"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Sportarten verwalten" />
+                <item
+                    android:id="@+id/nav_announcement"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="Durchsage" />
+            </group>
         </menu>
     </item>
 
 </menu>
+    <!-- Menüpunkte für Navigation Bar-->
