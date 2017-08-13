@@ -35,14 +35,14 @@ public class AccountHandler extends AsyncTask<String, Void, String> {
         URL url = null;
         if(type.equals("login")){
             try{
-                post_data = "email="+params[2]+"&password="+params[3];
+                post_data = "username="+params[2]+"&password="+params[3];
                 url = new URL(serverUrl+"login.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
         }else if(type.equals("register")){
             try{
-                post_data = "email="+params[2]+"&password="+params[3];
+                post_data = "email="+params[2]+"&password="+params[3];//+"&token="+params[4];
                 url = new URL(serverUrl+"register.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
