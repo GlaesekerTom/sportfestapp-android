@@ -1,11 +1,35 @@
 <resources>
-    <string name="app_name">SportfestApp</string>
+    <string name="app_name">KGS - Sportfest</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--  ______________________LOGIN ACTIVITY_______________________
+      Strings für die Login-Maske
+      -->
+
+    <string name="login_et_username">Benutzername</string>
+    <string name="login_et_password">Passwort</string>
+    <string name="login_btn_login">Anmelden</string>
+    <string name="login_tv_go_registration">Noch kein Acount vorhanden.</string>
+    <string name="login_tv_go_registration_ac">Registrieren</string>
+    <string name="login_cb_remember">Angemeldet bleiben</string>
+
+
+    <!--  ______________________REGISTRATION ACTIVITY_________________
+    Strings für die Registrierung-Maske
+    -->
+
+    <string name="registration_tv_title">Registrierung</string>
+    <string name="registration_et_username">Benutzername</string>
+    <string name="registration_et_password">Passwort</string>
+    <string name="registration_et_password_repeat">Passwort wiederholen</string>
+    <string name="registration_et_token">Token</string>
+    <string name="registration_btn_register">Registrieren</string>
+    <string name="registration_tv_go_login">Es existiert bereits ein Acount?</string>
+    <string name="registration_tv_go_login_ac">Anmelden</string>
+
+
 </resources>
