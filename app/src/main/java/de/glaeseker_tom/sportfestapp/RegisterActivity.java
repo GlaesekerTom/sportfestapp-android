@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -49,10 +50,15 @@ public class RegisterActivity extends AppCompatActivity {
         String password_repeat = et_password_repeat.getText().toString();
         String token = et_token.getText().toString();
         // Checkt, ob Eingabefelder gefüllt sind und Passwort und Passwort-Wiederholung übereinstimmen
-        if(username.isEmpty() || password.isEmpty() || token.isEmpty() || !(password.equals(password_repeat))){
-            return;
+        if(!(username.isEmpty() || password.isEmpty() || token.isEmpty())) {
+            if(password.equals(password_repeat)) {
+                AccountHandler accountHandler = new AccountHandler(this);
+                accountHandler.execute(urlString, "register", username, password, token);
+            }else {
+                Toast.makeText(getApplicationContext(), "FEHLER: Passwörter stimmen nicht überein!", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "FEHLER: Bitte fülle alle Felder!", Toast.LENGTH_SHORT).show();
         }
-        AccountHandler accountHandler = new AccountHandler(this);
-        accountHandler.execute(urlString,"register", username, password,token);
     }
 }

@@ -20,33 +20,29 @@ import java.net.URL;
  * Created by tomgl on 13.08.2017.
  */
 
-public class AccountHandler extends AsyncTask<String, Void, String> {
-    Context context;
+class AccountHandler extends AsyncTask<String, Void, String> {
+    private Context context;
 
     AccountHandler(Context ctx){
         context = ctx;
     }
-
+    //Todo Die PHP API noch etwas testen.
     @Override
     protected String doInBackground(String... params) {
         String serverUrl = params[0];
         String type = params[1];
         String post_data = "";
         URL url = null;
+        try {
+            url = new URL(serverUrl+"account_handler.php");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         if(type.equals("login")){
-            try{
-                post_data = "username="+params[2]+"&password="+params[3];
-                url = new URL(serverUrl+"login.php");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }else if(type.equals("register")){
-            try{
-                post_data = "email="+params[2]+"&password="+params[3];//+"&token="+params[4];
-                url = new URL(serverUrl+"register.php");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+                post_data = "type=login&username="+params[2]+"&password="+params[3];
+        }
+        else if(type.equals("register")){
+                post_data = "type=register&username="+params[2]+"&password="+params[3];//+"&token="+params[4];
         }
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -80,10 +76,10 @@ public class AccountHandler extends AsyncTask<String, Void, String> {
         try {
             JSONObject jsonObject= new JSONObject(s);
             if(jsonObject.names().get(0).equals("success")){
-                Toast.makeText(context, "SUCCESS "+ jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "ERFOLG: "+ jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                 context.startActivity(new Intent(context, MainActivity.class));
             }else{
-                Toast.makeText(context,"Error "+  jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"FEHLER: "+ jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
