@@ -9,6 +9,6 @@ Die Android-App dient zur Verwaltung der
 - Begegnungen
 - Spielergebnisse
 
-des Sportfestes der KGS Rastede.
+des Sportfestes.
 
 Diese Eingaben werden von einem PHP-Backend in Verbindung mit einer MySQL-Datenbank ausgewertet und wiederrum in der App dargestellt.
