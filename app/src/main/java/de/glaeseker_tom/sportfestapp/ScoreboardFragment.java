@@ -26,6 +26,8 @@ public class ScoreboardFragment extends Fragment {
     private CountDownTimer countDownTimer;
     private boolean isRunning = false;
     private int timerTime = 300;
+    private String serverUrl;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +48,7 @@ public class ScoreboardFragment extends Fragment {
         sport = v.findViewById(R.id.sc_tv_sport);
         btnCancel = v.findViewById(R.id.sc_btn_cancel);
         String[] b = getArguments().getStringArray("mm");
+        serverUrl = getArguments().getString("serverUrl");
         score.setText("0:0");
 
         matchId.setText("MatchID: "+b[0]);
@@ -122,6 +125,10 @@ public class ScoreboardFragment extends Fragment {
                 for (int i = 0; i < fragmentList.size(); i++) {
                     transaction.remove(fragmentList.get(i));
                 }
+                Table2Fragment frag = new Table2Fragment();
+                frag.setTableType("volleyball");
+                frag.setServerURL(serverUrl);
+                transaction.add(R.id.content_main, frag, "tableVolleyball");
                 transaction.commit();
             }
         });

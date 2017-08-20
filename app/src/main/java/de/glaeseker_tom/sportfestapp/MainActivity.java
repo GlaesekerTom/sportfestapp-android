@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity
         //Wenn Drawer geöffnet, dann wird geschlossen, sonst normale Funktion des Zurückbuttons.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } if(getFragmentManager().getFragments().size() > 0){
+            removeAllExistingFragments();
+        }else {
             super.onBackPressed();
         }
     }
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity
         removeAllExistingFragments();
         Bundle bundle = new Bundle();
         bundle.putStringArray("mm",item);
+        bundle.putString("serverUrl",url);
         ScoreboardFragment frag = new ScoreboardFragment();
         frag.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
