@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "68856705348",
+    "firebase_url": "https://sportfestapp.firebaseio.com",
+    "project_id": "sportfestapp",
+    "storage_bucket": "sportfestapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68856705348:android:62a29b64de7f2201",
+        "android_client_info": {
+          "package_name": "de.glaeseker_tom.sportfestapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68856705348-gtp5n066dt3de2ea8plo3cckiqkpq8qe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo2dAaUvfk_uJm7HgfGW_FiX-owmT3Jqc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

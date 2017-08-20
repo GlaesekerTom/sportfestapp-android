@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Einstellungen</string>
+    <string name="action_logout">Ausloggen</string>
 
     <!--  ______________________LOGIN ACTIVITY_______________________
       Strings für die Login-Maske
@@ -31,5 +31,16 @@
     <string name="registration_tv_go_login">Es existiert bereits ein Acount?</string>
     <string name="registration_tv_go_login_ac">Anmelden</string>
 
+    <!--  ______________________REGISTRATION ACTIVITY_________________
+    Strings für die Registrierung-Maske
+    -->
+
+    <string name="fragment_matchlist_tv_time">Uhr</string>
+    <string name="fragment_matchlist_tv_gym">Halle: </string>
+    <string name="fragment_matchlist_tv_result">Ergebnis: </string>
+    <string name="fragment_matchlist_tv_referee">Schiedsrichter: </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

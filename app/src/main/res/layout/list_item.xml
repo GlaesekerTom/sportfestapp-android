@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tv_match_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:paddingRight="10dp"
+            android:text="ID: 1"
+            android:textSize="20dp"
+            android:textAlignment="center"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:layout_weight="30"
+            android:text="12:00 Uhr"
+            android:textSize="20dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_teams"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="9A2 vs. 10D3"
+            android:layout_weight="40"
+            android:textSize="20dp"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="100">
+
+        <TextView
+            android:id="@+id/tv_gym"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="Halle: 1"
+            android:paddingRight="10dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:text="-"
+            android:paddingRight="10dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_referee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="Schiedsrichter: 9B3"
+            android:textAlignment="center"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

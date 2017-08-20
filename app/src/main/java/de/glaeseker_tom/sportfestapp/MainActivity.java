@@ -1,7 +1,9 @@
 package de.glaeseker_tom.sportfestapp;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Table2Fragment.OnListFragmentInteractionListener {
 
     private FragmentManager fragmentManager;
     private String url = "http://192.168.20.30:80/sportfest/";
@@ -64,8 +69,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            //return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -76,25 +82,26 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        removeAllExistingFragments();
 
         if (id == R.id.nav_soccer) {
-            TableFragment frag = new TableFragment();
+            Table2Fragment frag = new Table2Fragment();
             frag.setTableType("soccer");
             frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"tableSoccer");
             transaction.commit();
         } else if (id == R.id.nav_volleyball) {
-            TableFragment frag = new TableFragment();
-            frag.setTableType("volleyball");
+            Table2Fragment frag = new Table2Fragment();
             frag.setServerURL(url);
+            frag.setTableType("volleyball");
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"tableVolleyball");
             transaction.commit();
 
         } else if (id == R.id.nav_badminton) {
 
-            TableFragment frag = new TableFragment();
+            Table2Fragment frag = new Table2Fragment();
             frag.setTableType("badminton");
             frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -102,7 +109,7 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.nav_hockey) {
-            TableFragment frag = new TableFragment();
+            Table2Fragment frag = new Table2Fragment();
             frag.setTableType("hockey");
             frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -126,5 +133,28 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Entfernt alle existierenden Fragments
+    public void removeAllExistingFragments(){
+        //Führt evtl. zu Problemen
+        List<Fragment> fragmentlist = fragmentManager.getFragments();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        for (int i = 0; i < fragmentlist.size(); i++) {
+            transaction.remove(fragmentlist.get(i));
+        }
+        transaction.commit();
+    }
+
+    @Override
+    public void onListFragmentInteraction(String[] item) {
+        removeAllExistingFragments();
+        Bundle bundle = new Bundle();
+        bundle.putStringArray("mm",item);
+        ScoreboardFragment frag = new ScoreboardFragment();
+        frag.setArguments(bundle);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.content_main, frag,"scoreboard");
+        transaction.commit();
     }
 }
