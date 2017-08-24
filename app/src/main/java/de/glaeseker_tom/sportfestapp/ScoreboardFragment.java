@@ -1,9 +1,12 @@
 package de.glaeseker_tom.sportfestapp;
 
 
-import android.app.FragmentTransaction;
+import android.content.Context;
+import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +30,7 @@ public class ScoreboardFragment extends Fragment {
     private boolean isRunning = false;
     private int timerTime = 300;
     private String serverUrl;
+    private OnFragmentInteractionListener listener;
 
 
     @Override
@@ -62,7 +66,7 @@ public class ScoreboardFragment extends Fragment {
         startTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isRunning == false){
+                if(!isRunning){
                     startTimer(timeleft);
                     isRunning = true;
                     startTimer.setText("Pause");
@@ -120,16 +124,20 @@ public class ScoreboardFragment extends Fragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Fragment> fragmentList = getFragmentManager().getFragments();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                listener.onListFragmentInteraction("volleyball");
+               /* FragmentManager fragmentManager = getChildFragmentManager();
+                List<Fragment> fragmentList = fragmentManager.getFragments();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                System.out.println("Fragment Namen::----------------------------------------");
                 for (int i = 0; i < fragmentList.size(); i++) {
+                    System.out.println(fragmentList.get(i).toString());
                     transaction.remove(fragmentList.get(i));
                 }
                 Table2Fragment frag = new Table2Fragment();
                 frag.setTableType("volleyball");
                 frag.setServerURL(serverUrl);
                 transaction.add(R.id.content_main, frag, "tableVolleyball");
-                transaction.commit();
+                transaction.commit();*/
             }
         });
 
@@ -168,6 +176,20 @@ public class ScoreboardFragment extends Fragment {
                 time.setText(""+timeleft/60+":"+timeleft%60);
             }
 
+        }
+    }
+    public interface OnFragmentInteractionListener {
+        void onListFragmentInteraction(String s);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            listener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 }

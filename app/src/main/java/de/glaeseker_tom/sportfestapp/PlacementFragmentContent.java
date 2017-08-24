@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,27 +26,39 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table2Fragment extends Fragment {
+public class PlacementFragmentContent extends Fragment {
 
     private ListView lvMatches;
-    private String serverUrl;
-    private String tableType;
-    private ListAdapter adapter;
-    private ArrayList<MatchModel2> resultlist;
-    private OnListFragmentInteractionListener listener;
+    private String serverUrl = "http://192.168.20.30:80/sportfest/";
+    private String tableType = "volleyball";
+    private ListAdapter2 adapter;
+    private ArrayList<PlacementModel> resultlist;
+    private OnListFragmentInteractionListener2 listener;
+    private Button btn;
 
-    public Table2Fragment() {
+    public PlacementFragmentContent() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_table2, container, false);
-        lvMatches = v.findViewById(R.id.list_view);
+        System.out.println("Hier");
+        View v = inflater.inflate(R.layout.fragment_placement_content, container, false);
+        /*btn = v.findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked");
+            }
+        });*/
+        System.out.println("Hier");
+        lvMatches = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
-        adapter = new ListAdapter(getActivity(), R.layout.match_list_item, resultlist,listener);
+        System.out.println("Hier");
+        adapter = new ListAdapter2(getActivity(), R.layout.placement_list_item, resultlist,listener);
         lvMatches.setAdapter(adapter);
         new GetJsonData().execute();
+        System.out.println("Hier");
 
         return v;
     }
@@ -64,7 +77,7 @@ public class Table2Fragment extends Fragment {
 
 
 
-    public class GetJsonData extends AsyncTask<String, String, ArrayList<MatchModel2>> {
+    public class GetJsonData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
 
         URL url;
 
@@ -78,16 +91,15 @@ public class Table2Fragment extends Fragment {
         }
 
         @Override
-        protected ArrayList<MatchModel2> doInBackground(String... params) {
+        protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
                 String json_string;
-                String textparam = "sportname="+tableType+"_data";
+                /*String textparam = "sportname="+tableType+"_data";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setConnectTimeout(2000);
                 httpURLConnection.getOutputStream().write(textparam.getBytes("UTF-8"));
-
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
                 StringBuilder stringBuilder = new StringBuilder();
@@ -99,8 +111,8 @@ public class Table2Fragment extends Fragment {
                 httpURLConnection.disconnect();
                 String finalJson = stringBuilder.toString().trim();
                 System.out.println("finalJson:"+finalJson);
-
-               /* InputStream is = getResources().openRawResource(R.raw.example);
+                */
+                InputStream is = getResources().openRawResource(R.raw.placement);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
@@ -109,7 +121,7 @@ public class Table2Fragment extends Fragment {
                     sb.append(line);
                     line = br.readLine();
                 }
-                String finalJson = sb.toString();*/
+                String finalJson = sb.toString();
                 JSONObject parentObject = new JSONObject(finalJson);
                 if (parentObject.names().get(0).equals("error")) {
                     System.out.println("------------- JSON ERROR: " + parentObject.get("error").toString());
@@ -126,9 +138,8 @@ public class Table2Fragment extends Fragment {
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     System.out.println(finalObject.toString());
-                    MatchModel2 mm = new MatchModel2(finalObject.getString("matchId"), finalObject.getString("time"),
-                            finalObject.getString("team1"), finalObject.getString("team2"), finalObject.getString("result"),
-                            tableType, finalObject.getString("referee"),finalObject.getString("gym"));
+                    PlacementModel mm = new PlacementModel(Integer.parseInt(finalObject.getString("placementId")), finalObject.getString("team"),
+                            Integer.parseInt(finalObject.getString("points")), finalObject.getString("goalDifference"));
                     resultlist.add(mm);
                 }
                 if(resultlist.size() == 0){
@@ -145,9 +156,9 @@ public class Table2Fragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<MatchModel2> resultlist) {
+        protected void onPostExecute(ArrayList<PlacementModel> resultlist) {
             super.onPostExecute(resultlist);
-            
+
             if(resultlist == null){
                 Toast.makeText(getActivity(), "FEHLER: Keine Daten gefunden!", Toast.LENGTH_SHORT).show();
                 return;
@@ -155,15 +166,15 @@ public class Table2Fragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-    public interface OnListFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener2 {
         void onListFragmentInteraction(String[] item);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            listener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnListFragmentInteractionListener2) {
+            listener = (OnListFragmentInteractionListener2) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -171,59 +182,50 @@ public class Table2Fragment extends Fragment {
     }
 }
 
-    class ListAdapter extends ArrayAdapter{
+class ListAdapter2 extends ArrayAdapter {
 
-        public List<MatchModel2> matchModelList;
-        private int resource;
-        private LayoutInflater inflater;
-        private Table2Fragment.OnListFragmentInteractionListener listener;
-        public ListAdapter(Context context, int resource, List<MatchModel2> objects,
-                           Table2Fragment.OnListFragmentInteractionListener listener){
-            super(context,resource,objects);
-            matchModelList = objects;
-            this.resource = resource;
-            this.listener = listener;
-            inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public List<PlacementModel> placementModelList;
+    private int resource;
+    private LayoutInflater inflater;
+    private PlacementFragmentContent.OnListFragmentInteractionListener2 listener;
+    public ListAdapter2(Context context, int resource, List<PlacementModel> objects,
+                       PlacementFragmentContent.OnListFragmentInteractionListener2 listener){
+        super(context,resource,objects);
+        placementModelList = objects;
+        this.resource = resource;
+        this.listener = listener;
+        inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+    }
+
+    @Override
+    @NonNull
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent){
+        if(convertView == null){
+            convertView = inflater.inflate(resource, null);
         }
+        TextView tvPlace = convertView.findViewById(R.id.pl_tv_place);
+        TextView tvTeam = convertView.findViewById(R.id.pl_tv_team);
+        TextView tvPoints = convertView.findViewById(R.id.pl_tv_points);
+        TextView tvGoalDifference = convertView.findViewById(R.id.pl_tv_goal_difference);
 
-        @Override
-        @NonNull
-        public View getView(final int position, View convertView, @NonNull ViewGroup parent){
-            if(convertView == null){
-                convertView = inflater.inflate(resource, null);
+        tvPlace.setText(""+String.valueOf(placementModelList.get(position).getPlacementId()));
+        tvTeam.setText(placementModelList.get(position).getTeam());
+        tvPoints.setText(""+String.valueOf(placementModelList.get(position).getPoints()));
+        tvGoalDifference.setText(placementModelList.get(position).getGoalDifference());
+
+        /*convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlacementModel pm = placementModelList.get(position);
+                String[] pmArray = new String[8];
+                pmArray[0] = String.valueOf(pm.getPlacementId());
+                pmArray[1] = pm.getTeam();
+                pmArray[2] = String.valueOf(pm.getPoints());
+                pmArray[3] = pm.getGoalDifference();
+                listener.onListFragmentInteraction(pmArray);
             }
-            final TextView tv_MatchID = convertView.findViewById(R.id.tv_match_id);
-            TextView tv_Time = convertView.findViewById(R.id.tv_time);
-            TextView tv_Teams = convertView.findViewById(R.id.tv_teams);
-            TextView tv_Gym = convertView.findViewById(R.id.tv_gym);
-            TextView tv_Result = convertView.findViewById(R.id.tv_result);
-            TextView tv_Referee = convertView.findViewById(R.id.tv_referee);
-
-            tv_MatchID.setText(matchModelList.get(position).getMatchID());
-            tv_Time.setText(matchModelList.get(position).getTime()+ " Uhr");
-            tv_Teams.setText(matchModelList.get(position).getTeam1() +" vs. " + matchModelList.get(position).getTeam2());
-            tv_Gym.setText("Halle: " + matchModelList.get(position).getGym());
-            tv_Result.setText("Ergebnis: " +matchModelList.get(position).getResult());
-            tv_Referee.setText("Schiedsgericht: " +matchModelList.get(position).getReferee());
-
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MatchModel2 mm = matchModelList.get(position);
-                    String[] mmArray = new String[8];
-                    mmArray[0] = mm.getMatchID();
-                    mmArray[1] = mm.getTime();
-                    mmArray[2] = mm.getTeam1();
-                    mmArray[3] = mm.getTeam2();
-                    mmArray[4] = mm.getResult();
-                    mmArray[5] = mm.getSport();
-                    mmArray[6] = mm.getReferee();
-                    mmArray[7] = mm.getGym();
-                    listener.onListFragmentInteraction(mmArray);
-                }
-            });
-
-            return convertView;
-        }
+        });*/
+        return convertView;
+    }
 }

@@ -1,9 +1,9 @@
 package de.glaeseker_tom.sportfestapp;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,14 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Table2Fragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, PlacementFragment.OnFragmentInteractionListener,
+        Table2Fragment.OnListFragmentInteractionListener, ScoreboardFragment.OnFragmentInteractionListener,
+        PlacementFragmentContent.OnListFragmentInteractionListener2{
 
-    private FragmentManager fragmentManager;
+    private android.support.v4.app.FragmentManager fragmentManager;
     private String url = "http://192.168.20.30:80/sportfest/";
 
     @Override
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
+       /* fragmentManager.beginTransaction().add(R.id.content_main,new PlacementFragment(),"placement").commit();*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -87,9 +89,9 @@ public class MainActivity extends AppCompatActivity
         removeAllExistingFragments();
 
         if (id == R.id.nav_soccer) {
-            Table2Fragment frag = new Table2Fragment();
-            frag.setTableType("soccer");
-            frag.setServerURL(url);
+            PlacementFragment frag = new PlacementFragment();
+           // frag.setTableType("soccer");
+           // frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"tableSoccer");
             transaction.commit();
@@ -126,7 +128,8 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
         }*/
         else if (id == R.id.nav_managesports) {
-
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().add(R.id.content_main,new PlacementFragment(),"placement").commit();
         }
         else if (id== R.id.nav_announcement){
 
@@ -142,8 +145,11 @@ public class MainActivity extends AppCompatActivity
         //Führt evtl. zu Problemen
         List<Fragment> fragmentlist = fragmentManager.getFragments();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        System.out.println("Fragment Namen::----------------------------------------");
         for (int i = 0; i < fragmentlist.size(); i++) {
+            //System.out.println(fragmentlist.get(i).getTag());
             transaction.remove(fragmentlist.get(i));
+
         }
         transaction.commit();
     }
@@ -159,5 +165,20 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.content_main, frag,"scoreboard");
         transaction.commit();
+    }
+
+    @Override
+    public void onListFragmentInteraction(String s) {
+        removeAllExistingFragments();
+        Table2Fragment frag = new Table2Fragment();
+        frag.setTableType(s);
+        frag.setServerURL(url);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.content_main, frag,"scoreboard");
+        transaction.commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
     }
 }

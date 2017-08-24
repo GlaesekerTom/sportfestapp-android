@@ -46,8 +46,14 @@ class AccountHandler extends AsyncTask<String, Void, String> {
         }
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            if(httpURLConnection == null){
+                return null;
+            }
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
+
+            //Zeit setzen, wie lange die App versucht eine Verbindung zum Server aufzubauen.
+            httpURLConnection.setConnectTimeout(2000);
             httpURLConnection.getOutputStream().write(post_data.getBytes("UTF-8"));
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -73,6 +79,7 @@ class AccountHandler extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        if(s!= null){
         try {
             JSONObject jsonObject= new JSONObject(s);
             if(jsonObject.names().get(0).equals("success")){
@@ -83,6 +90,8 @@ class AccountHandler extends AsyncTask<String, Void, String> {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }}else {
+            Toast.makeText(context, "Es konnte keine Verbindung hergestellt werden!", Toast.LENGTH_LONG).show();
         }
     }
 }

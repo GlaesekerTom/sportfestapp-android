@@ -1,0 +1,7 @@
+{
+  "volleyball":[
+  {"placementId":"1", "team":"10D3","points":"23","goalDifference":"10:23"},
+  {"placementId":"2", "team":"9A2","points":"23","goalDifference":"10:23"},
+  {"placementId":"3", "team":"7B3","points":"232","goalDifference":"10:23"}
+  ]
+}

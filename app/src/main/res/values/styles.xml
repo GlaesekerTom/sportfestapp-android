@@ -17,4 +17,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="toolbarTabStyle" parent="Theme.AppCompat">
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
+    </style>
 </resources>

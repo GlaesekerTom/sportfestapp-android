@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    android:weightSum="100">
+
+        <TextView
+            android:id="@+id/pl_tv_place"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:paddingRight="10dp"
+            android:text="1."
+            android:textSize="20dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/pl_tv_team"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:paddingRight="10dp"
+            android:text="Mannschaft"
+            android:textSize="20dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/pl_tv_points"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:layout_weight="30"
+            android:text="26"
+            android:textSize="20dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/pl_tv_goal_difference"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="122:222"
+            android:layout_weight="30"
+            android:textSize="20dp"
+            android:textAlignment="center"/>
+
+</LinearLayout>
