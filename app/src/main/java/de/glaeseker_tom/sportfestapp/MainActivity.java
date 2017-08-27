@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"fragVolleyball");
             transaction.commit();
-
         } else if (id == R.id.nav_badminton) {
 
             Table2Fragment frag = new Table2Fragment();
