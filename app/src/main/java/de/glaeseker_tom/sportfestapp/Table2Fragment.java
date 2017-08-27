@@ -27,7 +27,7 @@ import java.util.List;
 
 public class Table2Fragment extends Fragment {
 
-    private ListView lvMatches;
+    //private ListView lvMatches;
     private String serverUrl;
     private String tableType;
     private ListAdapter adapter;
@@ -41,7 +41,7 @@ public class Table2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_table2, container, false);
-        lvMatches = v.findViewById(R.id.list_view);
+        ListView lvMatches = v.findViewById(R.id.list_view);
         resultlist = new ArrayList<>();
         adapter = new ListAdapter(getActivity(), R.layout.match_list_item, resultlist,listener);
         lvMatches.setAdapter(adapter);

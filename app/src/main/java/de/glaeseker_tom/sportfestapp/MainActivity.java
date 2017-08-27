@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class MainActivity extends AppCompatActivity
 
     private android.support.v4.app.FragmentManager fragmentManager;
     private String url = "http://192.168.20.30:80/sportfest/";
+    private int permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        permission = getIntent().getExtras().getInt("permission");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,8 +130,17 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_managesports) {
         }
-        else if (id == R.id.nav_manageteams) {
-
+        else if (id == R.id.nav_managetournament) {
+            if(permission== 2) {
+                ManageTournamentFragment frag = new ManageTournamentFragment();
+                frag.setServerURL(url);
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.add(R.id.content_main, frag, "fragBadminton");
+                transaction.commit();
+            }else{
+                Toast.makeText(getApplicationContext(), "Du besitzt nicht ausreichende Berechtigungen!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
         else if (id== R.id.nav_announcement){
 
@@ -173,11 +185,12 @@ public class MainActivity extends AppCompatActivity
         frag.setTableType(s);
         frag.setServerURL(url);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.content_main, frag,"scoreboard");
+        transaction.add(R.id.content_main, frag,"table"+s);
         transaction.commit();
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
     }
+
 }

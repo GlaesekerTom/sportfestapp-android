@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         et_password = (EditText) findViewById(R.id.et_password);
         btn_login = (Button) findViewById(R.id.btn_login);
         tv_register = (TextView) findViewById(R.id.tv_register);
+        et_username.setText("Baum2");
+        et_password.setText("123");
 
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override

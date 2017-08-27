@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/mt_tv_team_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:paddingRight="10dp"
+        android:text="1."
+        android:textSize="20dp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/mt_tv_team_manager"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:paddingRight="10dp"
+        android:text="Mannschaft"
+        android:textSize="20dp"
+        android:textAlignment="center" />
+
+</LinearLayout>

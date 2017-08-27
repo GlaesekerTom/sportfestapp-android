@@ -84,7 +84,10 @@ class AccountHandler extends AsyncTask<String, Void, String> {
             JSONObject jsonObject= new JSONObject(s);
             if(jsonObject.names().get(0).equals("success")){
                 Toast.makeText(context, "ERFOLG: "+ jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context, MainActivity.class));
+                Intent intent = new Intent(context,MainActivity.class);
+                int permission = 2;
+                intent.putExtra("permission",permission);
+                context.startActivity(intent);
             }else{
                 Toast.makeText(context,"FEHLER: "+ jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
             }
