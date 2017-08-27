@@ -13,8 +13,10 @@
         app:tabTextColor="#C2C2C2"
         app:tabSelectedTextColor="#ffff"
         android:theme="@style/toolbarTabStyle"
-        android:background="@color/colorPrimary"/>
-
+        android:background="@color/colorPrimary"
+        app:tabIndicatorColor="#ffff"
+        app:tabIndicatorHeight="4dp"/>
+<!---#bdbdbd"-->
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"

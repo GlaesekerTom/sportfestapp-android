@@ -23,17 +23,13 @@
         </menu>
     </item>
 
-    <item android:title="Anderes">
+    <item android:title="Platzierung">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_placement"
                     android:icon="@drawable/ic_menu_placement"
                     android:title="Platzierung" />
-                <item
-                    android:id="@+id/nav_totalplacement"
-                    android:icon="@drawable/ic_menu_totalplacement"
-                    android:title="Gesamtplatzierung" />
             </group>
         </menu>
     </item>
@@ -45,6 +41,10 @@
                     android:id="@+id/nav_managesports"
                     android:icon="@drawable/ic_menu_manage"
                     android:title="Sportarten verwalten" />
+                <item
+                    android:id="@+id/nav_manageteams"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Teams verwalten" />
                 <item
                     android:id="@+id/nav_announcement"
                     android:icon="@drawable/ic_menu_send"

@@ -34,7 +34,7 @@ public class PlacementFragmentContent extends Fragment {
     private ListAdapter2 adapter;
     private ArrayList<PlacementModel> resultlist;
     private OnListFragmentInteractionListener2 listener;
-    private Button btn;
+    //private Button btn;
 
     public PlacementFragmentContent() {
     }
@@ -42,7 +42,6 @@ public class PlacementFragmentContent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        System.out.println("Hier");
         View v = inflater.inflate(R.layout.fragment_placement_content, container, false);
         /*btn = v.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -51,21 +50,13 @@ public class PlacementFragmentContent extends Fragment {
                 System.out.println("Clicked");
             }
         });*/
-        System.out.println("Hier");
         lvMatches = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
-        System.out.println("Hier");
         adapter = new ListAdapter2(getActivity(), R.layout.placement_list_item, resultlist,listener);
         lvMatches.setAdapter(adapter);
         new GetJsonData().execute();
-        System.out.println("Hier");
-
         return v;
     }
-
-    /*public void startMatchFragment(MatchModel2 mm){
-
-    }*/
 
     public void setServerURL(String pUrl){
         serverUrl = pUrl;
@@ -180,6 +171,7 @@ public class PlacementFragmentContent extends Fragment {
                     + " must implement OnListFragmentInteractionListener");
         }
     }
+
 }
 
 class ListAdapter2 extends ArrayAdapter {
@@ -209,9 +201,9 @@ class ListAdapter2 extends ArrayAdapter {
         TextView tvPoints = convertView.findViewById(R.id.pl_tv_points);
         TextView tvGoalDifference = convertView.findViewById(R.id.pl_tv_goal_difference);
 
-        tvPlace.setText(""+String.valueOf(placementModelList.get(position).getPlacementId()));
+        tvPlace.setText(String.valueOf(placementModelList.get(position).getPlacementId()));
         tvTeam.setText(placementModelList.get(position).getTeam());
-        tvPoints.setText(""+String.valueOf(placementModelList.get(position).getPoints()));
+        tvPoints.setText(String.valueOf(placementModelList.get(position).getPoints()));
         tvGoalDifference.setText(placementModelList.get(position).getGoalDifference());
 
         /*convertView.setOnClickListener(new View.OnClickListener() {

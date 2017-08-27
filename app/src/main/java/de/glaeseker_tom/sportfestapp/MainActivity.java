@@ -89,18 +89,18 @@ public class MainActivity extends AppCompatActivity
         removeAllExistingFragments();
 
         if (id == R.id.nav_soccer) {
-            PlacementFragment frag = new PlacementFragment();
-           // frag.setTableType("soccer");
-           // frag.setServerURL(url);
+            Table2Fragment frag = new Table2Fragment();
+            frag.setTableType("soccer");
+            frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.content_main,frag,"tableSoccer");
+            transaction.add(R.id.content_main,frag,"fragSoccer");
             transaction.commit();
         } else if (id == R.id.nav_volleyball) {
             Table2Fragment frag = new Table2Fragment();
             frag.setServerURL(url);
             frag.setTableType("volleyball");
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.content_main,frag,"tableVolleyball");
+            transaction.add(R.id.content_main,frag,"fragVolleyball");
             transaction.commit();
 
         } else if (id == R.id.nav_badminton) {
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
             frag.setTableType("badminton");
             frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.content_main,frag,"tableBadminton");
+            transaction.add(R.id.content_main,frag,"fragBadminton");
             transaction.commit();
 
         } else if (id == R.id.nav_hockey) {
@@ -117,19 +117,19 @@ public class MainActivity extends AppCompatActivity
             frag.setTableType("hockey");
             frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.content_main, frag, "tableHockey");
+            transaction.add(R.id.content_main, frag, "fragHockey");
             transaction.commit();
 
-        }/*else if ( id == R.id.nav_placement){
-            String[] table = {"Soccer","Volleyball","Badminton", "Hockey","Icehockey"};
-          // PlacementFragment frag = new PlacementFragment(table);
+        }else if ( id == R.id.nav_placement){
+            PlacementFragment frag = new PlacementFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-           // transaction.add(R.id.content_main, frag, "tableHockey");
+            transaction.add(R.id.content_main,frag,"fragPlacement");
             transaction.commit();
-        }*/
+        }
         else if (id == R.id.nav_managesports) {
-            fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().add(R.id.content_main,new PlacementFragment(),"placement").commit();
+        }
+        else if (id == R.id.nav_manageteams) {
+
         }
         else if (id== R.id.nav_announcement){
 
@@ -142,15 +142,15 @@ public class MainActivity extends AppCompatActivity
 
     //Entfernt alle existierenden Fragments
     public void removeAllExistingFragments(){
-        //Führt evtl. zu Problemen
         List<Fragment> fragmentlist = fragmentManager.getFragments();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         System.out.println("Fragment Namen::----------------------------------------");
+        System.out.println(fragmentlist.size());
         for (int i = 0; i < fragmentlist.size(); i++) {
-            //System.out.println(fragmentlist.get(i).getTag());
             transaction.remove(fragmentlist.get(i));
 
         }
+        System.out.println(transaction.toString());
         transaction.commit();
     }
 

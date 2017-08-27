@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,14 @@ import android.view.ViewGroup;
 public class PlacementFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private SectionsPageAdapter adapter;
+    private int[] imageResId = {
+            R.drawable.ic_tab_soccer,
+            R.drawable.ic_tab_volleyball,
+            R.drawable.ic_tab_placement,
+            R.drawable.ic_tab_badminton,
+            R.drawable.ic_tab_hockey
+    };
 
     public PlacementFragment() {
     }
@@ -23,20 +30,34 @@ public class PlacementFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_placement, container, false);
-        //sectionsPageAdapter = new SectionsPageAdapter(getActivity().getSupportFragmentManager());
+        adapter = new SectionsPageAdapter(getChildFragmentManager());
         ViewPager viewPager = v.findViewById(R.id.view_pager);
         setupViewPager(viewPager);
         TabLayout tabLayout = v.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        System.out.println("tablayoutCount: "+tabLayout.getTabCount());
+        for(int i = 0; i < tabLayout.getTabCount(); i++){
+            tabLayout.getTabAt(i).setIcon(imageResId[i]);
+        }
         return v;
     }
 
     private void setupViewPager(ViewPager viewPager){
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new PlacementFragmentContent(),"Gesamtliste");
+        adapter.addFragment(new PlacementFragmentContent(),"");
+        adapter.addFragment(new PlacementFragmentContent(),"");
+        adapter.addFragment(new PlacementFragmentContent(),"");
+        adapter.addFragment(new PlacementFragmentContent(),"");
+        adapter.addFragment(new PlacementFragmentContent(),"");
+        /*   adapter.addFragment(new PlacementFragmentContent(),"Gesamtliste");
         adapter.addFragment(new PlacementFragmentContent(),"Volleyball");
+        adapter.addFragment(new PlacementFragmentContent(),"Badminton");
+        adapter.addFragment(new PlacementFragmentContent(),"Hockey");
+        adapter.addFragment(new PlacementFragmentContent(),"Fußball");
+        */
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -49,11 +70,6 @@ public class PlacementFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
