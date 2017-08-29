@@ -1,0 +1,169 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="de.glaeseker_tom.sportfestapp.ScoreboardFragment">
+
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sc_tv_matchId"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_weight="20"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/sc_tv_teams"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="60"
+                    android:textSize="30dp"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/sc_tv_sport"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:textSize="20dp"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sc_btn_timer_start"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:text="Start"
+                    android:layout_weight="20"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/sc_tv_timer"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:textSize="80dp"
+                    android:layout_weight="60"
+                    android:textAlignment="center"
+                    android:textStyle="normal" />
+                <Button
+                    android:id="@+id/sc_btn_timer_reset"
+                    android:text="Reset"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="20"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tore"
+                android:textSize="40dp"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="20">
+
+                    <Button
+                        android:id="@+id/sc_btn_goal_team1a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+" />
+                    <Button
+                        android:id="@+id/sc_btn_goal_team1r"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="-" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/sc_tv_score"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="60"
+                    android:textSize="90dp"
+                    android:textAlignment="center"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="20">
+                    <Button
+                        android:id="@+id/sc_btn_goal_team2a"
+                        android:text="+"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"/>
+                    <Button
+                        android:id="@+id/sc_btn_goal_team2r"
+                        android:text="-"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"/>
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/sc_btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Abbrechen"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:layout_weight="50"/>
+
+                <Button
+                    android:id="@+id/sc_btn_submit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Absenden"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:layout_weight="50"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
