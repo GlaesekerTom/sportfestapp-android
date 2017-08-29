@@ -14,22 +14,20 @@
             android:id="@+id/sc_tv_matchId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Start"
             android:textSize="20dp"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/sc_tv_teams"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="40"
-            android:textSize="25dp"
+            android:layout_weight="50"
+            android:textSize="30dp"
             android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/sc_tv_sport"
-            android:text="Reset"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="30"
@@ -37,73 +35,107 @@
             android:textAlignment="center"/>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/sc_btn_timer_start"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Start"
-            android:layout_weight="30"/>
+
 
         <TextView
             android:id="@+id/sc_tv_timer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
             android:layout_weight="40"
-            android:textSize="25dp"
-            android:textAlignment="center"/>
+            android:textSize="100dp"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/sc_btn_timer_reset"
-            android:text="Reset"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="30"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sc_btn_timer_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                android:layout_weight="50"/>
+
+            <Button
+                android:id="@+id/sc_btn_timer_reset"
+                android:text="Reset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Tore"
+        android:textSize="50dp"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/sc_btn_goal_team1a"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="+"
-            android:layout_weight="30"/>
-        <Button
-            android:id="@+id/sc_btn_goal_team1r"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="-"
-            android:layout_weight="30"/>
+            android:orientation="vertical"
+            android:layout_weight="20">
+
+            <Button
+                android:id="@+id/sc_btn_goal_team1a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+" />
+            <Button
+                android:id="@+id/sc_btn_goal_team1r"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/sc_tv_score"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="40"
-            android:textSize="25dp"
+            android:layout_height="100dp"
+            android:layout_weight="60"
+            android:textSize="90dp"
             android:textAlignment="center"/>
 
-        <Button
-            android:id="@+id/sc_btn_goal_team2r"
-            android:text="-"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30"/>
-        <Button
-            android:id="@+id/sc_btn_goal_team2a"
-            android:text="+"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="30"/>
+            android:orientation="vertical"
+            android:layout_weight="20">
+            <Button
+                android:id="@+id/sc_btn_goal_team2a"
+                android:text="+"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"/>
+            <Button
+                android:id="@+id/sc_btn_goal_team2r"
+                android:text="-"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"/>
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

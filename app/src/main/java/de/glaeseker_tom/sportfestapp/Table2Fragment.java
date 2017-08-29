@@ -27,7 +27,6 @@ import java.util.List;
 
 public class Table2Fragment extends Fragment {
 
-    //private ListView lvMatches;
     private String serverUrl;
     private String tableType;
     private ListAdapter adapter;
@@ -49,10 +48,6 @@ public class Table2Fragment extends Fragment {
 
         return v;
     }
-
-    /*public void startMatchFragment(MatchModel2 mm){
-
-    }*/
 
     public void setServerURL(String pUrl){
         serverUrl = pUrl;

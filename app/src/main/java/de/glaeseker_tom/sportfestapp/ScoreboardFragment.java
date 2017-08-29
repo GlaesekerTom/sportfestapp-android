@@ -55,7 +55,7 @@ public class ScoreboardFragment extends Fragment {
         serverUrl = getArguments().getString("serverUrl");
         score.setText("0:0");
 
-        matchId.setText("MatchID: "+b[0]);
+        matchId.setText("MID: "+b[0]);
         teams.setText(b[2]+" vs. "+b[3]);
         sport.setText(b[5].toUpperCase());
         if(timeleft%60<10){
@@ -144,7 +144,12 @@ public class ScoreboardFragment extends Fragment {
         return v;
     }
     private void startTimer(int seconds){
-        time.setText(""+seconds);
+       //time.setText(""+seconds);
+        if(count%60<10){
+            time.setText(""+seconds/60+":0"+seconds%60);
+        }else{
+            time.setText(""+seconds/60+":"+seconds%60);
+        }
         countDownTimer = new CountDownTimer(seconds * 1000, 1000) {
             @Override
             public void onTick(long l) {
@@ -154,7 +159,7 @@ public class ScoreboardFragment extends Fragment {
                 }else{
                     time.setText(""+count/60+":"+count%60);
                 }
-
+//Todo Zeitwackler entfernen
             }
 
             @Override

@@ -35,7 +35,6 @@ public class PlacementFragment extends Fragment {
         setupViewPager(viewPager);
         TabLayout tabLayout = v.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-        System.out.println("tablayoutCount: "+tabLayout.getTabCount());
         for(int i = 0; i < tabLayout.getTabCount(); i++){
             tabLayout.getTabAt(i).setIcon(imageResId[i]);
         }
@@ -43,6 +42,7 @@ public class PlacementFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager){
+        adapter.addFragment(new PlacementFragmentContent(),"");
         adapter.addFragment(new PlacementFragmentContent(),"");
         adapter.addFragment(new PlacementFragmentContent(),"");
         adapter.addFragment(new PlacementFragmentContent(),"");
