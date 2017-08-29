@@ -34,6 +34,10 @@
                     android:id="@+id/nav_placement"
                     android:icon="@drawable/ic_menu_placement"
                     android:title="Platzierung" />
+                <item
+                    android:id="@+id/nav_total_placement"
+                    android:icon="@drawable/ic_menu_totalplacement"
+                    android:title="Gesamtplatzierung" />
             </group>
         </menu>
     </item>

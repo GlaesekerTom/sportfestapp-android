@@ -1,7 +1,5 @@
 package de.glaeseker_tom.sportfestapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,8 @@ public class PlacementFragment extends Fragment {
             R.drawable.ic_tab_volleyball,
             R.drawable.ic_tab_badminton,
             R.drawable.ic_tab_basketball,
-            R.drawable.ic_tab_hockey
+            R.drawable.ic_tab_hockey//,
+           // R.drawable.ic_tab_placement
     };
 
     public PlacementFragment() {
@@ -47,6 +46,7 @@ public class PlacementFragment extends Fragment {
         adapter.addFragment(new PlacementFragmentContent("badminton"),"");
         adapter.addFragment(new PlacementFragmentContent("basketball"),"");
         adapter.addFragment(new PlacementFragmentContent("hockey"),"");
+        //adapter.addFragment(new PlacementFragmentContent("hockey"),"");
         //adapter.addFragment(new PlacementFragmentContent(),"");
         /*   adapter.addFragment(new PlacementFragmentContent(),"Gesamtliste");
         adapter.addFragment(new PlacementFragmentContent(),"Volleyball");

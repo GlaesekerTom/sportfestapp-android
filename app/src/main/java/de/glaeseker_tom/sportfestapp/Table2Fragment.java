@@ -59,7 +59,7 @@ public class Table2Fragment extends Fragment {
 
 
 
-    public class GetJsonData extends AsyncTask<String, String, ArrayList<MatchModel2>> {
+    private class GetJsonData extends AsyncTask<String, String, ArrayList<MatchModel2>> {
 
         URL url;
 
@@ -131,9 +131,7 @@ public class Table2Fragment extends Fragment {
                 }
                 return resultlist;
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;

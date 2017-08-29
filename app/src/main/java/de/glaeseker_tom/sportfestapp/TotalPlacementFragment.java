@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,30 +27,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlacementFragmentContent extends Fragment {
+public class TotalPlacementFragment extends Fragment {
+
 
     private String serverUrl = "http://192.168.20.30:80/sportfest/";
-    private String tableType;
-    private ListAdapter2 adapter;
+    private String tableType = "volleyball";
+    private ListAdapterTotalPlacement adapter;
     private ArrayList<PlacementModel> resultlist;
 
-    public PlacementFragmentContent() {
-    }
-
-    @SuppressLint("ValidFragment")
-    public PlacementFragmentContent(String tableType) {
-        this.tableType = tableType;
+    public TotalPlacementFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_placement_content, container, false);
-        ListView lvMatches = v.findViewById(R.id.pf_listview);
+        ListView lvPlacement = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
-        adapter = new ListAdapter2(getActivity(), R.layout.placement_list_item, resultlist);
-        lvMatches.setAdapter(adapter);
-        new GetPlacementData().execute();
+        adapter = new ListAdapterTotalPlacement(getActivity(), R.layout.placement_list_item, resultlist);
+        lvPlacement.setAdapter(adapter);
+        new GetJsonData().execute();
         return v;
     }
 
@@ -63,14 +60,14 @@ public class PlacementFragmentContent extends Fragment {
 
 
 
-    public class GetPlacementData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
+    public class GetJsonData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
 
         URL url;
 
         @Override
         protected void onPreExecute() {
             try {
-                url = new URL(serverUrl + "getPlacementData.php");
+                url = new URL(serverUrl + "get_json_data.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -79,8 +76,8 @@ public class PlacementFragmentContent extends Fragment {
         @Override
         protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
-                String json_string;
-                String textparam = "sportname="+tableType+"_placement";
+                /*String json_string;
+                String textparam = "sportname="+tableType+"_data";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
@@ -96,8 +93,8 @@ public class PlacementFragmentContent extends Fragment {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 String finalJson = stringBuilder.toString().trim();
-                System.out.println("finalJson:"+finalJson);
-                /*
+                System.out.println("finalJson:"+finalJson);*/
+
                 InputStream is = getResources().openRawResource(R.raw.placement);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
@@ -107,7 +104,7 @@ public class PlacementFragmentContent extends Fragment {
                     sb.append(line);
                     line = br.readLine();
                 }
-                String finalJson = sb.toString();*/
+                String finalJson = sb.toString();
                 JSONObject parentObject = new JSONObject(finalJson);
                 if (parentObject.names().get(0).equals("error")) {
                     System.out.println("------------- JSON ERROR: " + parentObject.get("error").toString());
@@ -133,7 +130,9 @@ public class PlacementFragmentContent extends Fragment {
                 }
                 return resultlist;
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
@@ -150,17 +149,35 @@ public class PlacementFragmentContent extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
+  /*  public interface OnListFragmentInteractionListener2 {
+        void onListFragmentInteraction(String[] item);
+    }*/
+
+  /*  @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener2) {
+            listener = (OnListFragmentInteractionListener2) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+*/
 }
 
-class ListAdapter2 extends ArrayAdapter {
+class ListAdapterTotalPlacement extends ArrayAdapter {
 
-    private List<PlacementModel> placementModelList;
+    public List<PlacementModel> placementModelList;
     private int resource;
     private LayoutInflater inflater;
-    ListAdapter2(Context context, int resource, List<PlacementModel> objects){
+    //private PlacementFragmentContent.OnListFragmentInteractionListener2 listener;
+    public ListAdapterTotalPlacement(Context context, int resource, List<PlacementModel> objects){
+        //PlacementFragmentContent.OnListFragmentInteractionListener2 listener){
         super(context,resource,objects);
         placementModelList = objects;
         this.resource = resource;
+        //this.listener = listener;
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -181,6 +198,18 @@ class ListAdapter2 extends ArrayAdapter {
         tvPoints.setText(String.valueOf(placementModelList.get(position).getPoints()));
         tvGoalDifference.setText(placementModelList.get(position).getGoalDifference());
 
+        /*convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlacementModel pm = placementModelList.get(position);
+                String[] pmArray = new String[8];
+                pmArray[0] = String.valueOf(pm.getPlacementId());
+                pmArray[1] = pm.getTeam();
+                pmArray[2] = String.valueOf(pm.getPoints());
+                pmArray[3] = pm.getGoalDifference();
+                listener.onListFragmentInteraction(pmArray);
+            }
+        });*/
         return convertView;
     }
 }

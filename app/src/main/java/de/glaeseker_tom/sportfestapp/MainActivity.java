@@ -139,6 +139,12 @@ public class MainActivity extends AppCompatActivity
             transaction.add(R.id.content_main,frag,"fragPlacement");
             transaction.commit();
         }
+        else if (id== R.id.nav_total_placement){
+            TotalPlacementFragment frag = new TotalPlacementFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main,frag,"fragTotalPlacement");
+            transaction.commit();
+        }
         else if (id == R.id.nav_managesports) {
         }
         else if (id == R.id.nav_managetournament) {
