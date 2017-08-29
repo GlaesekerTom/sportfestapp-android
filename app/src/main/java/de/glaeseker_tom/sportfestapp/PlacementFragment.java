@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 
 public class PlacementFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+  //  private OnFragmentInteractionListener mListener;
     private SectionsPageAdapter adapter;
     private int[] imageResId = {
             R.drawable.ic_tab_soccer,
             R.drawable.ic_tab_volleyball,
-            R.drawable.ic_tab_placement,
             R.drawable.ic_tab_badminton,
+            R.drawable.ic_tab_basketball,
             R.drawable.ic_tab_hockey
     };
 
@@ -42,12 +42,12 @@ public class PlacementFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager){
-        adapter.addFragment(new PlacementFragmentContent(),"");
-        adapter.addFragment(new PlacementFragmentContent(),"");
-        adapter.addFragment(new PlacementFragmentContent(),"");
-        adapter.addFragment(new PlacementFragmentContent(),"");
-        adapter.addFragment(new PlacementFragmentContent(),"");
-        adapter.addFragment(new PlacementFragmentContent(),"");
+        adapter.addFragment(new PlacementFragmentContent("fußball"),"");
+        adapter.addFragment(new PlacementFragmentContent("volleyball"),"");
+        adapter.addFragment(new PlacementFragmentContent("badminton"),"");
+        adapter.addFragment(new PlacementFragmentContent("basketball"),"");
+        adapter.addFragment(new PlacementFragmentContent("hockey"),"");
+        //adapter.addFragment(new PlacementFragmentContent(),"");
         /*   adapter.addFragment(new PlacementFragmentContent(),"Gesamtliste");
         adapter.addFragment(new PlacementFragmentContent(),"Volleyball");
         adapter.addFragment(new PlacementFragmentContent(),"Badminton");
@@ -58,7 +58,7 @@ public class PlacementFragment extends Fragment {
         viewPager.setOffscreenPageLimit(3);
     }
 
-
+/*
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -73,5 +73,5 @@ public class PlacementFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
+    }*/
 }

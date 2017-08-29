@@ -18,9 +18,9 @@ import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, PlacementFragment.OnFragmentInteractionListener,
-        Table2Fragment.OnListFragmentInteractionListener, ScoreboardFragment.OnFragmentInteractionListener,
-        PlacementFragmentContent.OnListFragmentInteractionListener2{
+        implements NavigationView.OnNavigationItemSelectedListener, //PlacementFragment.OnFragmentInteractionListener,
+        Table2Fragment.OnListFragmentInteractionListener, ScoreboardFragment.OnFragmentInteractionListener{
+        //PlacementFragmentContent.OnListFragmentInteractionListener2{
 
     private android.support.v4.app.FragmentManager fragmentManager;
     private String url = "http://192.168.20.30:80/sportfest/";
@@ -114,7 +114,18 @@ public class MainActivity extends AppCompatActivity
             transaction.add(R.id.content_main,frag,"fragBadminton");
             transaction.commit();
 
-        } else if (id == R.id.nav_hockey) {
+        }  else if (id == R.id.nav_basketball) {
+
+            Table2Fragment frag = new Table2Fragment();
+            frag.setTableType("basketball");
+            frag.setServerURL(url);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main,frag,"fragBasketball");
+            transaction.commit();
+
+        }
+
+        else if (id == R.id.nav_hockey) {
             Table2Fragment frag = new Table2Fragment();
             frag.setTableType("hockey");
             frag.setServerURL(url);
@@ -189,8 +200,5 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-    }
 
 }

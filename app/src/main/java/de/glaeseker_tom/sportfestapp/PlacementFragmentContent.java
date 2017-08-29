@@ -1,5 +1,6 @@
 package de.glaeseker_tom.sportfestapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,13 +31,18 @@ public class PlacementFragmentContent extends Fragment {
 
     private ListView lvMatches;
     private String serverUrl = "http://192.168.20.30:80/sportfest/";
-    private String tableType = "volleyball";
+    private String tableType;
     private ListAdapter2 adapter;
     private ArrayList<PlacementModel> resultlist;
-    private OnListFragmentInteractionListener2 listener;
+    //private OnListFragmentInteractionListener2 listener;
     //private Button btn;
 
     public PlacementFragmentContent() {
+    }
+
+    @SuppressLint("ValidFragment")
+    public PlacementFragmentContent(String tableType) {
+        this.tableType = tableType;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class PlacementFragmentContent extends Fragment {
         });*/
         lvMatches = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
-        adapter = new ListAdapter2(getActivity(), R.layout.placement_list_item, resultlist,listener);
+        adapter = new ListAdapter2(getActivity(), R.layout.placement_list_item, resultlist);//,listener);
         lvMatches.setAdapter(adapter);
         new GetJsonData().execute();
         return v;
@@ -85,7 +91,7 @@ public class PlacementFragmentContent extends Fragment {
         protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
                 String json_string;
-                /*String textparam = "sportname="+tableType+"_data";
+                String textparam = "sportname="+tableType+"_data";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
@@ -102,7 +108,7 @@ public class PlacementFragmentContent extends Fragment {
                 httpURLConnection.disconnect();
                 String finalJson = stringBuilder.toString().trim();
                 System.out.println("finalJson:"+finalJson);
-                */
+                /*
                 InputStream is = getResources().openRawResource(R.raw.placement);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
@@ -112,7 +118,7 @@ public class PlacementFragmentContent extends Fragment {
                     sb.append(line);
                     line = br.readLine();
                 }
-                String finalJson = sb.toString();
+                String finalJson = sb.toString();*/
                 JSONObject parentObject = new JSONObject(finalJson);
                 if (parentObject.names().get(0).equals("error")) {
                     System.out.println("------------- JSON ERROR: " + parentObject.get("error").toString());
@@ -157,11 +163,11 @@ public class PlacementFragmentContent extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-    public interface OnListFragmentInteractionListener2 {
+  /*  public interface OnListFragmentInteractionListener2 {
         void onListFragmentInteraction(String[] item);
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener2) {
@@ -171,7 +177,7 @@ public class PlacementFragmentContent extends Fragment {
                     + " must implement OnListFragmentInteractionListener");
         }
     }
-
+*/
 }
 
 class ListAdapter2 extends ArrayAdapter {
@@ -179,13 +185,13 @@ class ListAdapter2 extends ArrayAdapter {
     public List<PlacementModel> placementModelList;
     private int resource;
     private LayoutInflater inflater;
-    private PlacementFragmentContent.OnListFragmentInteractionListener2 listener;
-    public ListAdapter2(Context context, int resource, List<PlacementModel> objects,
-                       PlacementFragmentContent.OnListFragmentInteractionListener2 listener){
+    //private PlacementFragmentContent.OnListFragmentInteractionListener2 listener;
+    public ListAdapter2(Context context, int resource, List<PlacementModel> objects){
+                       //PlacementFragmentContent.OnListFragmentInteractionListener2 listener){
         super(context,resource,objects);
         placementModelList = objects;
         this.resource = resource;
-        this.listener = listener;
+        //this.listener = listener;
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
