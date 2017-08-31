@@ -51,10 +51,13 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         //Wenn Zurückbutton gedrückt
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        System.out.println("KEKSE SIND TOLL UND LECKER");
+        List<Fragment> fragmentlist = fragmentManager.getFragments();
+        System.out.println("Fragmentslistsize: "+fragmentlist.size());
         //Wenn Drawer geöffnet, dann wird geschlossen, sonst normale Funktion des Zurückbuttons.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } if(getFragmentManager().getFragments().size() > 0){
+        } if(getSupportFragmentManager().getFragments().size() > 0){
             removeAllExistingFragments();
         }else {
             super.onBackPressed();

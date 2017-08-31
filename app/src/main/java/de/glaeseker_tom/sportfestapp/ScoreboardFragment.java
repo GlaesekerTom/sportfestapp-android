@@ -225,10 +225,11 @@ public class ScoreboardFragment extends Fragment {
         protected String doInBackground(String... params) {
             String serverUrl = params[0];
             String post_data = "";
-            try {
+            try {//TODo anpassen
                 URL url = null;
                 url = new URL(serverUrl+"updateMatchResult.php");
-                post_data = "sport="+params[1]+"&m1="+params[2]+"&m2="+params[3]+"&t1="+params[4]+"&t2="+params[5];
+                //Beschlossen so
+                post_data = "sport="+params[1]+"&spielId="+params[2]+"&m1="+params[3]+"&m2="+params[4]+"&t1="+params[5]+"&t2="+params[6];
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 if(httpURLConnection == null){
                     return null;
