@@ -51,7 +51,9 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_manage_tournament, container, false);
-
+        if(getArguments() != null){
+            serverUrl = getArguments().getString("serverUrl");
+        }
         Button btnStartTime = v.findViewById(R.id.btn_start_time);
         btnEndTime = v.findViewById(R.id.btn_end_time);
         tvStartTime = v.findViewById(R.id.tv_start_time);
@@ -170,11 +172,6 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
 
         }
     }
-
-    public void setServerURL(String pUrl) {
-        serverUrl = pUrl;
-    }
-
 
     public class SendTournamentData extends AsyncTask<String, String, String> {
 

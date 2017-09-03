@@ -12,6 +12,7 @@ public class PlacementFragment extends Fragment {
 
   //  private OnFragmentInteractionListener mListener;
     private SectionsPageAdapter adapter;
+    private String serverUrl = "SERVERURL----------";
     private int[] imageResId = {
             R.drawable.ic_tab_soccer,
             R.drawable.ic_tab_volleyball,
@@ -41,7 +42,12 @@ public class PlacementFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager){
-        adapter.addFragment(new PlacementFragmentContent("fußball"),"");
+        PlacementFragmentContent frag = new PlacementFragmentContent("fußball");
+        Bundle bundle = new Bundle();
+        bundle.putString("serverUrl",serverUrl);
+        frag.setArguments(bundle);
+        adapter.addFragment(frag,"");
+        //adapter.addFragment(new PlacementFragmentContent("fußball"),"");
         adapter.addFragment(new PlacementFragmentContent("volleyball"),"");
         adapter.addFragment(new PlacementFragmentContent("badminton"),"");
         adapter.addFragment(new PlacementFragmentContent("basketball"),"");

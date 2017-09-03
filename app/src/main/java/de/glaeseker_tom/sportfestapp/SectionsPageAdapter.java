@@ -18,7 +18,6 @@ public class SectionsPageAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-    private boolean removing;
 
     public void addFragment(Fragment fragment, String title){
         mFragmentList.add(fragment);

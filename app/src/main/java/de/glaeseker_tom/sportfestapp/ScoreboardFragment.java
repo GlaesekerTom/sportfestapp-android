@@ -1,7 +1,9 @@
 package de.glaeseker_tom.sportfestapp;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -80,11 +82,28 @@ public class ScoreboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(goalTeam1 > 0 || goalTeam2 > 0) {
-                    SendScoreboardData sendScoreboardData = new SendScoreboardData(getContext());
-                    sendScoreboardData.execute(sportType, team1, team2, String.valueOf(goalTeam1), String.valueOf(goalTeam2));
-                    listener.onListFragmentInteraction(sportType);
+                    AlertDialog.Builder builder= new AlertDialog.Builder(getContext());
+                    builder.setTitle("Ergebnis abschicken?");
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            SendScoreboardData sendScoreboardData = new SendScoreboardData(getContext());
+                            sendScoreboardData.execute(sportType, team1, team2, String.valueOf(goalTeam1), String.valueOf(goalTeam2));
+                            listener.onListFragmentInteraction(sportType);
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.show();
+                }else{
+                    Toast.makeText(getContext(), "Kein Spielergebnis eingetragen!", Toast.LENGTH_SHORT).show();
                 }
-            }
+                }
         });
 
 

@@ -26,7 +26,6 @@ class AccountHandler extends AsyncTask<String, Void, String> {
     AccountHandler(Context ctx){
         context = ctx;
     }
-    //Todo Die PHP API noch etwas testen.
     @Override
     protected String doInBackground(String... params) {
         String serverUrl = params[0];
@@ -82,19 +81,24 @@ class AccountHandler extends AsyncTask<String, Void, String> {
         if(s!= null){
         try {
             JSONObject jsonObject= new JSONObject(s);
-            if(jsonObject.names().get(0).equals("success")){
-                Toast.makeText(context, "ERFOLG: "+ jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context,MainActivity.class);
-                int permission = 2;
-                intent.putExtra("permission",permission);
-                context.startActivity(intent);
+            if(jsonObject.names().get(0).equals("status")){
+                if(jsonObject.getString("status").equals("logged_in")) {
+                    int permission = jsonObject.getInt("permission");
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("permission", permission);
+                    context.startActivity(intent);
+                }else if (jsonObject.getString("status").equals("registered")){
+                    context.startActivity(new Intent(context,LoginActivity.class));
+                }else if (jsonObject.getString("status").equals("error")){
+                    Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                }
             }else{
-                Toast.makeText(context,"FEHLER: "+ jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "FEHLER: Ungültige Antwort des Servers.", Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }}else {
-            Toast.makeText(context, "Es konnte keine Verbindung hergestellt werden!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "FEHLER: Es konnte keine Verbindung hergestellt werden.", Toast.LENGTH_LONG).show();
         }
     }
 }

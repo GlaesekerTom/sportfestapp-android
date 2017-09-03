@@ -45,6 +45,9 @@ public class PlacementFragmentContent extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_placement_content, container, false);
+        if(getArguments() != null){
+            System.out.println(getArguments().getString("serverUrl"));
+        }
         ListView lvMatches = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
         adapter = new ListAdapter2(getActivity(), R.layout.placement_list_item, resultlist);
@@ -53,13 +56,13 @@ public class PlacementFragmentContent extends Fragment {
         return v;
     }
 
-    public void setServerURL(String pUrl){
-        serverUrl = pUrl;
-    }
+    //public void setServerURL(String pUrl){
+     //   serverUrl = pUrl;
+    //}
 
-    public void setTableType(String pTableType){
-        tableType = pTableType;
-    }
+   //public void setTableType(String pTableType){
+   //     tableType = pTableType;
+   // }
 
 
 
@@ -79,7 +82,7 @@ public class PlacementFragmentContent extends Fragment {
         @Override
         protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
-                String json_string;
+                /*String json_string;
                 String textparam = "sportname="+tableType+"_placement";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -96,8 +99,8 @@ public class PlacementFragmentContent extends Fragment {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 String finalJson = stringBuilder.toString().trim();
-                System.out.println("finalJson:"+finalJson);
-                /*
+                System.out.println("finalJson:"+finalJson);*/
+
                 InputStream is = getResources().openRawResource(R.raw.placement);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
@@ -107,7 +110,7 @@ public class PlacementFragmentContent extends Fragment {
                     sb.append(line);
                     line = br.readLine();
                 }
-                String finalJson = sb.toString();*/
+                String finalJson = sb.toString();
                 JSONObject parentObject = new JSONObject(finalJson);
                 if (parentObject.names().get(0).equals("error")) {
                     System.out.println("------------- JSON ERROR: " + parentObject.get("error").toString());

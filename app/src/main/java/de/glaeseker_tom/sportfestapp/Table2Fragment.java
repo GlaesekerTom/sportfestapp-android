@@ -1,8 +1,11 @@
 package de.glaeseker_tom.sportfestapp;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -40,6 +43,10 @@ public class Table2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_table2, container, false);
+        if(getArguments()!=null){
+            serverUrl = getArguments().getString("serverUrl");
+            tableType = getArguments().getString("tableType");
+        }
         ListView lvMatches = v.findViewById(R.id.list_view);
         resultlist = new ArrayList<>();
         adapter = new ListAdapter(getActivity(), R.layout.match_list_item, resultlist,listener);
@@ -48,33 +55,21 @@ public class Table2Fragment extends Fragment {
 
         return v;
     }
-
+/*
     public void setServerURL(String pUrl){
         serverUrl = pUrl;
     }
 
     public void setTableType(String pTableType){
         tableType = pTableType;
-    }
-
-
+    }*/
 
     private class GetJsonData extends AsyncTask<String, String, ArrayList<MatchModel2>> {
-
-        URL url;
-
-        @Override
-        protected void onPreExecute() {
-            try {
-                url = new URL(serverUrl + "get_json_data.php");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
 
         @Override
         protected ArrayList<MatchModel2> doInBackground(String... params) {
             try {
+                URL url = new URL(serverUrl + "get_json_data.php");
                 String json_string;
                 String textparam = "sportname="+tableType+"_data";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

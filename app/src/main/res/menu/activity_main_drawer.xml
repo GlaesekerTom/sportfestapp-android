@@ -31,9 +31,13 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_placement"
+                    android:id="@+id/nav_placement1"
                     android:icon="@drawable/ic_menu_placement"
-                    android:title="Platzierung" />
+                    android:title="Vorrunde" />
+                <item
+                    android:id="@+id/nav_placement2"
+                    android:icon="@drawable/ic_menu_placement"
+                    android:title="Endrunde" />
                 <item
                     android:id="@+id/nav_total_placement"
                     android:icon="@drawable/ic_menu_totalplacement"
@@ -46,17 +50,9 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_managesports"
-                    android:icon="@drawable/ic_menu_manage"
-                    android:title="Sportarten verwalten" />
-                <item
                     android:id="@+id/nav_managetournament"
                     android:icon="@drawable/ic_menu_manage"
                     android:title="Turnier erstellen" />
-                <item
-                    android:id="@+id/nav_announcement"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="Durchsage" />
             </group>
         </menu>
     </item>

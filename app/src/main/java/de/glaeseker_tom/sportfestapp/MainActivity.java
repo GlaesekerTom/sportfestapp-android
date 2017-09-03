@@ -1,9 +1,11 @@
 package de.glaeseker_tom.sportfestapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,23 +20,21 @@ import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, //PlacementFragment.OnFragmentInteractionListener,
-        Table2Fragment.OnListFragmentInteractionListener, ScoreboardFragment.OnFragmentInteractionListener{
-        //PlacementFragmentContent.OnListFragmentInteractionListener2{
+        implements NavigationView.OnNavigationItemSelectedListener,Table2Fragment.OnListFragmentInteractionListener, ScoreboardFragment.OnFragmentInteractionListener{
 
     private android.support.v4.app.FragmentManager fragmentManager;
     private String url = "http://192.168.20.30:80/sportfest/";
     private int permission;
-
+    private boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        permission = getIntent().getExtras().getInt("permission");
+        permission = 2;
+        //permission = getIntent().getExtras().getInt("permission");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fragmentManager = getSupportFragmentManager();
-       /* fragmentManager.beginTransaction().add(R.id.content_main,new PlacementFragment(),"placement").commit();*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -45,23 +45,78 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+    @Override
+    protected  void onResume(){
+        super.onResume();
+        this.doubleBackToExitPressedOnce = false;
+    }
 
     //----------------------Zurückbutton Event------------------------------------------------
     @Override
     public void onBackPressed() {
-        //Wenn Zurückbutton gedrückt
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (fragmentManager.getBackStackEntryCount() > 1) {
+                fragmentManager.popBackStack();
+                // super.onBackPressed();
+                // return;
+            } else {
+                if (doubleBackToExitPressedOnce) {
+                    fragmentManager.popBackStack();
+                    super.onBackPressed();
+                    return;
+                }
+
+                this.doubleBackToExitPressedOnce = true;
+                Toast.makeText(this, "Press one more time to exit",
+                        Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 3000);
+
+            }
+        }
+       // super.onBackPressed();
+        /*if (doubleBackToExitPressedOnce) {
+            moveTaskToBack(true);
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Erneut drücken um, App zu verlassen.", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);*/
+    //Wenn Zurückbutton gedrückt
+      /*  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         System.out.println("KEKSE SIND TOLL UND LECKER");
         List<Fragment> fragmentlist = fragmentManager.getFragments();
         System.out.println("Fragmentslistsize: "+fragmentlist.size());
         //Wenn Drawer geöffnet, dann wird geschlossen, sonst normale Funktion des Zurückbuttons.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } if(getSupportFragmentManager().getFragments().size() > 0){
+        }if(getSupportFragmentManager().getFragments().size() > 0){
             removeAllExistingFragments();
-        }else {
+            System.out.println("hier");
+            fragmentManager.popBackStack();
+
+       }else {
+            System.out.println("super.onBackPressed()");
             super.onBackPressed();
-        }
+        }*/
     }
     //-------------------------------ActionBar-Menu-----------------------------------------
     @Override
@@ -78,7 +133,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
             //return true;
@@ -93,26 +147,30 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         removeAllExistingFragments();
+        Bundle bundle = new Bundle();
 
         if (id == R.id.nav_soccer) {
             Table2Fragment frag = new Table2Fragment();
-            frag.setTableType("soccer");
-            frag.setServerURL(url);
+            bundle.putString("tableType","soccer");
+            bundle.putString("serverUrl",url);
+            frag.setArguments(bundle);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"fragSoccer");
             transaction.commit();
         } else if (id == R.id.nav_volleyball) {
             Table2Fragment frag = new Table2Fragment();
-            frag.setServerURL(url);
-            frag.setTableType("volleyball");
+            bundle.putString("tableType","volleyball");
+            bundle.putString("serverUrl",url);
+            frag.setArguments(bundle);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"fragVolleyball");
             transaction.commit();
         } else if (id == R.id.nav_badminton) {
 
             Table2Fragment frag = new Table2Fragment();
-            frag.setTableType("badminton");
-            frag.setServerURL(url);
+            bundle.putString("tableType","badminton");
+            bundle.putString("serverUrl",url);
+            frag.setArguments(bundle);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"fragBadminton");
             transaction.commit();
@@ -120,40 +178,47 @@ public class MainActivity extends AppCompatActivity
         }  else if (id == R.id.nav_basketball) {
 
             Table2Fragment frag = new Table2Fragment();
-            frag.setTableType("basketball");
-            frag.setServerURL(url);
+            bundle.putString("tableType","basketball");
+            bundle.putString("serverUrl",url);
+            frag.setArguments(bundle);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"fragBasketball");
             transaction.commit();
-
         }
-
         else if (id == R.id.nav_hockey) {
             Table2Fragment frag = new Table2Fragment();
-            frag.setTableType("hockey");
-            frag.setServerURL(url);
+            bundle.putString("tableType","hockey");
+            bundle.putString("serverUrl",url);
+            frag.setArguments(bundle);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main, frag, "fragHockey");
             transaction.commit();
 
-        }else if ( id == R.id.nav_placement){
+        }else if ( id == R.id.nav_placement1){
             PlacementFragment frag = new PlacementFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.content_main,frag,"fragPlacement");
+            transaction.add(R.id.content_main,frag,"fragPlacement1");
+            transaction.commit();
+
+        }else if(id == R.id.nav_placement2){
+            PlacementFragment frag = new PlacementFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_main,frag,"fragPlacement2");
             transaction.commit();
         }
         else if (id== R.id.nav_total_placement){
             TotalPlacementFragment frag = new TotalPlacementFragment();
+            frag.setServerURL(url);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_main,frag,"fragTotalPlacement");
             transaction.commit();
         }
-        else if (id == R.id.nav_managesports) {
-        }
         else if (id == R.id.nav_managetournament) {
+            //Überprüfung der Berechtigungen für die Tuniererstellung vorhanden sind
             if(permission== 2) {
                 ManageTournamentFragment frag = new ManageTournamentFragment();
-                frag.setServerURL(url);
+                bundle.putString("serverUrl",url);
+                frag.setArguments(bundle);
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.add(R.id.content_main, frag, "fragBadminton");
                 transaction.commit();
@@ -161,9 +226,6 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "Du besitzt nicht ausreichende Berechtigungen!", Toast.LENGTH_SHORT).show();
                 return false;
             }
-        }
-        else if (id== R.id.nav_announcement){
-
         }
         //Nach dem eine Auswahl gemacht wurde wird NavigationBar wieder geschlossen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,26 +237,53 @@ public class MainActivity extends AppCompatActivity
     public void removeAllExistingFragments(){
         List<Fragment> fragmentlist = fragmentManager.getFragments();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        System.out.println("Fragment Namen::----------------------------------------");
-        System.out.println(fragmentlist.size());
         for (int i = 0; i < fragmentlist.size(); i++) {
             transaction.remove(fragmentlist.get(i));
+            transaction.addToBackStack(null);
 
         }
         System.out.println(transaction.toString());
+
         transaction.commit();
+
     }
 
     @Override
-    public void onListFragmentInteraction(String[] item) {
+    public void onListFragmentInteraction(final String[] item) {
+        if(item[4].equals("-")) {
+            startScoreboard(item);
+        }else{
+            if(permission > 1){
+                AlertDialog.Builder builder= new AlertDialog.Builder(this);
+                builder.setTitle("Ergebnis steht fest. Trotzdem bearbeiten?");
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        startScoreboard(item);
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.show();
+            }else{
+                Toast.makeText(this, "Ergebnis steht bereits fest!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public void startScoreboard(String[] item){
         removeAllExistingFragments();
         Bundle bundle = new Bundle();
-        bundle.putStringArray("mm",item);
-        bundle.putString("serverUrl",url);
+        bundle.putStringArray("mm", item);
+        bundle.putString("serverUrl", url);
         ScoreboardFragment frag = new ScoreboardFragment();
         frag.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.content_main, frag,"scoreboard");
+        transaction.add(R.id.content_main, frag, "scoreboard");
         transaction.commit();
     }
 
@@ -202,10 +291,12 @@ public class MainActivity extends AppCompatActivity
     public void onListFragmentInteraction(String s) {
         removeAllExistingFragments();
         Table2Fragment frag = new Table2Fragment();
-        frag.setTableType(s);
-        frag.setServerURL(url);
+        Bundle bundle = new Bundle();
+        bundle.putString("tableType",s);
+        bundle.putString("serverUrl",url);
+        frag.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.content_main, frag,"table"+s);
+        transaction.add(R.id.content_main, frag, "table" + s);
         transaction.commit();
     }
 

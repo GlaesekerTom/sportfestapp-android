@@ -30,7 +30,7 @@ import java.util.List;
 public class TotalPlacementFragment extends Fragment {
 
 
-    private String serverUrl = "http://192.168.20.30:80/sportfest/";
+    private String serverUrl;// = "http://192.168.20.30:80/sportfest/";
     private String tableType = "volleyball";
     private ListAdapterTotalPlacement adapter;
     private ArrayList<PlacementModel> resultlist;
