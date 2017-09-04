@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.glaeseker_tom.sportfestapp.Table2Fragment">
+    tools:context="de.glaeseker_tom.sportfestapp.fragments.MatchListFragment">
 
     <ListView
         android:id="@+id/list_view"

@@ -1,4 +1,4 @@
-package de.glaeseker_tom.sportfestapp;
+package de.glaeseker_tom.sportfestapp.fragments;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -34,6 +34,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import de.glaeseker_tom.sportfestapp.R;
+import de.glaeseker_tom.sportfestapp.models.TeamModel;
 
 public class ManageTournamentFragment extends Fragment implements View.OnClickListener {
 

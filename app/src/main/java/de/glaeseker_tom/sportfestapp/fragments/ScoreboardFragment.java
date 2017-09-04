@@ -1,14 +1,10 @@
-package de.glaeseker_tom.sportfestapp;
+package de.glaeseker_tom.sportfestapp.fragments;
 
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.os.CountDownTimer;
@@ -16,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,10 +24,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Pattern;
+
+import de.glaeseker_tom.sportfestapp.R;
 
 
 public class ScoreboardFragment extends Fragment {
@@ -41,21 +37,20 @@ public class ScoreboardFragment extends Fragment {
 
     private TextView  score;
     private Button startTimer;
-    private int goalTeam1, goalTeam2, timeleft, count;
+    private int goalTeam1, goalTeam2, timeLeft, count;
     private TextView time;
     private CountDownTimer countDownTimer;
     private boolean isRunning = false;
-    private int timerTime = 300;
+    private int timerTime = 600;
     private String serverUrl, team1, team2, sportType;
     private OnFragmentInteractionListener listener;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
-        timeleft = timerTime;
+        timeLeft = timerTime;
         if(getArguments() != null){
             serverUrl = getArguments().getString("serverUrl");
         }
@@ -63,7 +58,9 @@ public class ScoreboardFragment extends Fragment {
         Button btnGoalTeam2a = v.findViewById(R.id.sc_btn_goal_team2a);
         Button btnGoalTeam1r = v.findViewById(R.id.sc_btn_goal_team1r);
         Button btnGoalTeam2r = v.findViewById(R.id.sc_btn_goal_team2r);
+        Button btnSetTime = v.findViewById(R.id.sc_btn_set_time);
         Button btnSubmit = v.findViewById(R.id.sc_btn_submit);
+        final EditText editText = v.findViewById(R.id.sc_et_input_time);
         score = v.findViewById(R.id.sc_tv_score);
         startTimer = v.findViewById(R.id.sc_btn_timer_start);
         Button resetTimer = v.findViewById(R.id.sc_btn_timer_reset);
@@ -109,22 +106,47 @@ public class ScoreboardFragment extends Fragment {
                 }
         });
 
+        btnSetTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String inputTime = editText.getText().toString();
+                if(!inputTime.isEmpty() && Pattern.matches("\\d{2}:\\d{2}",inputTime) ){
+                    String[] parts = inputTime.split(":");
+                    if(Integer.valueOf(parts[0])<60 && Integer.valueOf(parts[1])<60) {
+                        timerTime = Integer.valueOf(parts[0]) * 60 + Integer.valueOf(parts[1]);
+                        timeLeft = timerTime;
+                        if (timeLeft % 60 < 10) {
+                            time.setText("" + timeLeft / 60 + ":0" + timeLeft % 60);
+                        } else {
+                            time.setText("" + timeLeft / 60 + ":" + timeLeft % 60);
+                        }
+                    }else{
+                        Toast.makeText(getContext(), "Falsches Format. Zahlen müssen kleiner als 60 sein.", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getContext(), "Falsches Format. Beispiel: 12:12", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        if(timeleft%60<10){
-            time.setText(""+timeleft/60+":0"+timeleft%60);
+
+        if(timeLeft %60<10){
+            time.setText(""+ timeLeft /60+":0"+ timeLeft %60);
         }else{
-            time.setText(""+timeleft/60+":"+timeleft%60);
+            time.setText(""+ timeLeft /60+":"+ timeLeft %60);
         }
         startTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!isRunning){
-                    startTimer(timeleft);
+                    startTimer(timeLeft);
                     isRunning = true;
-                    startTimer.setText("Pause");
+                    startTimer.setText("Stop");
+                    startTimer.setBackgroundColor(getResources().getColor(R.color.color_pause_button));
                 }else{
                     startTimer.setText("Start");
-                    timeleft = count;
+                    startTimer.setBackgroundColor(getResources().getColor(R.color.color_start_button));
+                    timeLeft = count;
                     resetTimer();
 
                 }
@@ -134,9 +156,10 @@ public class ScoreboardFragment extends Fragment {
         resetTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timeleft = timerTime;
+                timeLeft = timerTime;
                 resetTimer();
                 startTimer.setText("Start");
+                startTimer.setBackgroundColor(getResources().getColor(R.color.color_start_button));
 
             }
         });
@@ -214,10 +237,11 @@ public class ScoreboardFragment extends Fragment {
             countDownTimer.cancel();
             isRunning = false;
             count = 0;
-            if(timeleft%60<10){
-                time.setText(""+timeleft/60+":0"+timeleft%60);
+            //timeLeft = timerTime;
+            if(timeLeft %60<10){
+                time.setText(""+ timeLeft /60+":0"+ timeLeft %60);
             }else{
-                time.setText(""+timeleft/60+":"+timeleft%60);
+                time.setText(""+ timeLeft /60+":"+ timeLeft %60);
             }
 
         }

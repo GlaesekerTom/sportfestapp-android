@@ -20,7 +20,7 @@
 
         <EditText
             android:fontFamily="sans-serif"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -36,7 +36,7 @@
 
         <EditText
             android:fontFamily="sans-serif"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -59,7 +59,7 @@
             android:id="@+id/cb_remember_me"
             android:buttonTint="@android:color/white"
             android:textColor="@android:color/white"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login_tv_go_registration"
             android:textColor="@android:color/white"
-            android:paddingRight="10px"/>
+            android:paddingRight="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"

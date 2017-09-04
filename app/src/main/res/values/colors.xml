@@ -3,4 +3,10 @@
     <color name="colorPrimary">#69f0ae</color>
     <color name="colorPrimaryDark">#69f0ae</color>
     <color name="colorAccent">#69f0ae</color>
+
+    <color name="background_grey_light">#eeeeee</color>
+
+    <color name="color_pause_button">#e57373</color>
+    <color name="color_reset_button">#4db6ac</color>
+    <color name="color_start_button">@color/colorPrimary</color>
 </resources>

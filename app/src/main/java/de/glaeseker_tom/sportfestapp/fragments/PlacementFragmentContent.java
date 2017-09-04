@@ -1,4 +1,4 @@
-package de.glaeseker_tom.sportfestapp;
+package de.glaeseker_tom.sportfestapp.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,15 +20,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.glaeseker_tom.sportfestapp.R;
+import de.glaeseker_tom.sportfestapp.models.PlacementModel;
+
 public class PlacementFragmentContent extends Fragment {
 
-    private String serverUrl = "http://192.168.20.30:80/sportfest/";
+    private String serverUrl;
     private String tableType;
     private ListAdapter2 adapter;
     private ArrayList<PlacementModel> resultlist;
@@ -46,7 +48,7 @@ public class PlacementFragmentContent extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_placement_content, container, false);
         if(getArguments() != null){
-            System.out.println(getArguments().getString("serverUrl"));
+            serverUrl = getArguments().getString("serverUrl");
         }
         ListView lvMatches = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
@@ -56,17 +58,7 @@ public class PlacementFragmentContent extends Fragment {
         return v;
     }
 
-    //public void setServerURL(String pUrl){
-     //   serverUrl = pUrl;
-    //}
-
-   //public void setTableType(String pTableType){
-   //     tableType = pTableType;
-   // }
-
-
-
-    public class GetPlacementData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
+    private class GetPlacementData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
 
         URL url;
 
@@ -82,7 +74,8 @@ public class PlacementFragmentContent extends Fragment {
         @Override
         protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
-                /*String json_string;
+                /*Für Testzwecke Todo Entfernen Testzwecke
+                String json_string;
                 String textparam = "sportname="+tableType+"_placement";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);

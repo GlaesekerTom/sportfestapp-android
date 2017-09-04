@@ -1,18 +1,19 @@
-package de.glaeseker_tom.sportfestapp;
+package de.glaeseker_tom.sportfestapp.models;
 
 /**
- * Created by tomgl on 19.08.2017.
+ * Das PlacementModel enthält alle Daten für einen Eintrag in der ListView des PlacementFragments.
+ * Des Weiteren besitzt es die benötigten Getter.
  */
 
 public class PlacementModel {
 
+    //Attribute
     private int placementId;
     private String team;
     private int points;
     private String goalDifference;
-    public PlacementModel(){
 
-    }
+    //Konstruktor
     public PlacementModel(int pPlacementID , String pTeam, int pPoints, String pGoalDifference){
         placementId = pPlacementID;
         team = pTeam;
@@ -20,36 +21,20 @@ public class PlacementModel {
         goalDifference = pGoalDifference;
     }
 
+    //Get-Methoden
     public int getPlacementId() {
         return placementId;
-    }
-
-    public void setPlacementId(int placementID) {
-        this.placementId = placementID;
     }
 
     public String getTeam() {
         return team;
     }
 
-    public void setTeam(String team) {
-        this.team = team;
-    }
-
     public int getPoints() {
         return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 
     public String getGoalDifference() {
         return goalDifference;
     }
-
-    public void setGoalDifference(String goalDifference) {
-        this.goalDifference = goalDifference;
-    }
-
 }

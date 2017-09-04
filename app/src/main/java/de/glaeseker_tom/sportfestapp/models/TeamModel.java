@@ -1,30 +1,26 @@
-package de.glaeseker_tom.sportfestapp;
+package de.glaeseker_tom.sportfestapp.models;
 
 /**
- * Created by tomgl on 27.08.2017.
+ * Repräsentiert ein Team bei der Turniererstellung.
  */
 
 public class TeamModel {
-
+    //Attribute
     private String teamName;
     private String teamManager;
 
+    //Konstruktor
     public TeamModel(String teamName, String teamManager){
         this.teamManager = teamManager;
         this.teamName = teamName;
     }
 
+    //Get-Methoden
     public String getTeamName(){
         return teamName;
     }
+
     public String getTeamManager(){
         return teamManager;
-    }
-
-    public void setTeamName(String teamName){
-        this.teamName = teamName;
-    }
-    public void setTeamManager(String teamManager){
-        this.teamManager = teamManager;
     }
 }

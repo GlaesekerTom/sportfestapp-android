@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="de.glaeseker_tom.sportfestapp.PlacementFragment">
+    tools:context="de.glaeseker_tom.sportfestapp.fragments.PlacementFragment">
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"

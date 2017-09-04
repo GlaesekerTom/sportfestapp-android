@@ -30,6 +30,7 @@
     <string name="registration_btn_register">Registrieren</string>
     <string name="registration_tv_go_login">Es existiert bereits ein Acount?</string>
     <string name="registration_tv_go_login_ac">Anmelden</string>
+    <string name="registration_iv_content_description">KGS-Logo</string>
 
     <!--  ______________________REGISTRATION ACTIVITY_________________
     Strings für die Registrierung-Maske
@@ -42,5 +43,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- __________________________SCOREBOARD FRAGMENT____________________
+    Strings für das Scoreboard-Fragment
+    -->
+    <string name="fragment_scoreboard_btn_timer_start">Starten</string>
+    <string name="fragment_scoreboard_btn_timer_reset">Zurücksetzen</string>
+    <string name="fragment_scoreboard_tv_goals"><u>Punkte</u></string>
+    <string name="fragment_scoreboard_btn_goal_teama">+</string>
+    <string name="fragment_scoreboard_btn_goal_teamr">-</string>
+    <string name="fragment_scoreboard_btn_cancel">Abbrechen</string>
+    <string name="fragment_scoreboard_btn_submit">Absenden</string>
+    <string name="fragment_scoreboard_btn_set_time">Setzen</string>
+    <string name="fragment_scoreboard_et_input_time">Zeit (Minuten:Sekunden)</string>
 
 </resources>

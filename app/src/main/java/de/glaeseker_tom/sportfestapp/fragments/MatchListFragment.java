@@ -1,11 +1,8 @@
-package de.glaeseker_tom.sportfestapp;
+package de.glaeseker_tom.sportfestapp.fragments;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -23,26 +20,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table2Fragment extends Fragment {
+import de.glaeseker_tom.sportfestapp.R;
+import de.glaeseker_tom.sportfestapp.models.MatchModel;
+
+public class MatchListFragment extends Fragment {
 
     private String serverUrl;
     private String tableType;
     private ListAdapter adapter;
-    private ArrayList<MatchModel2> resultlist;
+    private ArrayList<MatchModel> resultlist;
     private OnListFragmentInteractionListener listener;
 
-    public Table2Fragment() {
+    public MatchListFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_table2, container, false);
+        View v = inflater.inflate(R.layout.fragment_match_list, container, false);
+        //Bei der Erstellung des Fragments werden Argumente übergeben (siehe MainActivity).
         if(getArguments()!=null){
             serverUrl = getArguments().getString("serverUrl");
             tableType = getArguments().getString("tableType");
@@ -55,19 +55,10 @@ public class Table2Fragment extends Fragment {
 
         return v;
     }
-/*
-    public void setServerURL(String pUrl){
-        serverUrl = pUrl;
-    }
-
-    public void setTableType(String pTableType){
-        tableType = pTableType;
-    }*/
-
-    private class GetJsonData extends AsyncTask<String, String, ArrayList<MatchModel2>> {
+    private class GetJsonData extends AsyncTask<String, String, ArrayList<MatchModel>> {
 
         @Override
-        protected ArrayList<MatchModel2> doInBackground(String... params) {
+        protected ArrayList<MatchModel> doInBackground(String... params) {
             try {
                 URL url = new URL(serverUrl + "get_json_data.php");
                 String json_string;
@@ -90,7 +81,8 @@ public class Table2Fragment extends Fragment {
                 String finalJson = stringBuilder.toString().trim();
                 System.out.println("finalJson:"+finalJson);
 
-               /* InputStream is = getResources().openRawResource(R.raw.example);
+               /* Für Testzwecke Todo Entfernen des Tests
+                InputStream is = getResources().openRawResource(R.raw.example);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
@@ -107,7 +99,7 @@ public class Table2Fragment extends Fragment {
                 }
                 for (int i = 0; i < resultlist.size(); i++) {
                     resultlist.remove(i);
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
                 }
                 System.out.println("RESULTLIST:"+resultlist.toString());
 
@@ -116,7 +108,7 @@ public class Table2Fragment extends Fragment {
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     System.out.println(finalObject.toString());
-                    MatchModel2 mm = new MatchModel2(finalObject.getString("matchId"), finalObject.getString("time"),
+                    MatchModel mm = new MatchModel(finalObject.getString("matchId"), finalObject.getString("time"),
                             finalObject.getString("team1"), finalObject.getString("team2"), finalObject.getString("result"),
                             tableType, finalObject.getString("referee"), finalObject.getString("gym"),finalObject.getString("groupChar"));
                     resultlist.add(mm);
@@ -133,7 +125,7 @@ public class Table2Fragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<MatchModel2> resultlist) {
+        protected void onPostExecute(ArrayList<MatchModel> resultlist) {
             super.onPostExecute(resultlist);
             
             if(resultlist == null){
@@ -161,12 +153,12 @@ public class Table2Fragment extends Fragment {
 
     class ListAdapter extends ArrayAdapter{
 
-        public List<MatchModel2> matchModelList;
+        private List<MatchModel> matchModelList;
         private int resource;
         private LayoutInflater inflater;
-        private Table2Fragment.OnListFragmentInteractionListener listener;
-        public ListAdapter(Context context, int resource, List<MatchModel2> objects,
-                           Table2Fragment.OnListFragmentInteractionListener listener){
+        private MatchListFragment.OnListFragmentInteractionListener listener;
+        ListAdapter(Context context, int resource, List<MatchModel> objects,
+                           MatchListFragment.OnListFragmentInteractionListener listener){
             super(context,resource,objects);
             matchModelList = objects;
             this.resource = resource;
@@ -198,7 +190,7 @@ public class Table2Fragment extends Fragment {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MatchModel2 mm = matchModelList.get(position);
+                    MatchModel mm = matchModelList.get(position);
                     String[] mmArray = new String[9];
                     mmArray[0] = mm.getMatchID();
                     mmArray[1] = mm.getGroup();
