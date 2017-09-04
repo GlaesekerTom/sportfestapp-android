@@ -14,11 +14,12 @@ public class MatchModel2 {
     private String gym;
     private String referee;
     private String sport;
+    private String group;
 
     public MatchModel2(){
 
     }
-    public MatchModel2(String pMatchID , String pTime, String pTeam1, String pTeam2, String pResult, String pSport, String pReferee, String pGym){
+    public MatchModel2(String pMatchID , String pTime, String pTeam1, String pTeam2, String pResult, String pSport, String pReferee, String pGym, String pGroup){
         matchID = pMatchID;
         time = pTime;
         team1 = pTeam1;
@@ -27,6 +28,7 @@ public class MatchModel2 {
         gym = pGym;
         referee = pReferee;
         sport = pSport;
+        group = pGroup;
     }
 
     public String getMatchID() {
@@ -90,4 +92,8 @@ public class MatchModel2 {
     public void setTime(String pTime) {
         this.time = pTime;
     }
+
+    public String getGroup(){ return group; }
+
+    public void setGroup(String group) { this.group = group; }
 }

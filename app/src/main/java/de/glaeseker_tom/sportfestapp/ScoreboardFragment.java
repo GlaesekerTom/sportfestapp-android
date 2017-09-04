@@ -39,8 +39,8 @@ public class ScoreboardFragment extends Fragment {
     public ScoreboardFragment() {
     }
 
-    private TextView matchId, score, teams, sport;
-    private Button btnGoalTeam1a,btnGoalTeam2a,btnGoalTeam1r, btnGoalTeam2r, startTimer, resetTimer, btnCancel, btnSubmit;
+    private TextView  score;
+    private Button startTimer;
     private int goalTeam1, goalTeam2, timeleft, count;
     private TextView time;
     private CountDownTimer countDownTimer;
@@ -56,26 +56,29 @@ public class ScoreboardFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
         timeleft = timerTime;
-        btnGoalTeam1a = v.findViewById(R.id.sc_btn_goal_team1a);
-        btnGoalTeam2a = v.findViewById(R.id.sc_btn_goal_team2a);
-        btnGoalTeam1r = v.findViewById(R.id.sc_btn_goal_team1r);
-        btnGoalTeam2r = v.findViewById(R.id.sc_btn_goal_team2r);
-        btnSubmit = v.findViewById(R.id.sc_btn_submit);
+        if(getArguments() != null){
+            serverUrl = getArguments().getString("serverUrl");
+        }
+        Button btnGoalTeam1a = v.findViewById(R.id.sc_btn_goal_team1a);
+        Button btnGoalTeam2a = v.findViewById(R.id.sc_btn_goal_team2a);
+        Button btnGoalTeam1r = v.findViewById(R.id.sc_btn_goal_team1r);
+        Button btnGoalTeam2r = v.findViewById(R.id.sc_btn_goal_team2r);
+        Button btnSubmit = v.findViewById(R.id.sc_btn_submit);
         score = v.findViewById(R.id.sc_tv_score);
         startTimer = v.findViewById(R.id.sc_btn_timer_start);
-        resetTimer = v.findViewById(R.id.sc_btn_timer_reset);
+        Button resetTimer = v.findViewById(R.id.sc_btn_timer_reset);
         time = v.findViewById(R.id.sc_tv_timer);
-        matchId = v.findViewById(R.id.sc_tv_matchId);
-        teams = v.findViewById(R.id.sc_tv_teams);
-        sport = v.findViewById(R.id.sc_tv_sport);
-        btnCancel = v.findViewById(R.id.sc_btn_cancel);
+        TextView groupChar = v.findViewById(R.id.sc_tv_matchId);
+        TextView teams = v.findViewById(R.id.sc_tv_teams);
+        TextView sport = v.findViewById(R.id.sc_tv_sport);
+        Button btnCancel = v.findViewById(R.id.sc_btn_cancel);
         String[] b = getArguments().getStringArray("mm");
-        team1 = b[2];
-        team2 = b[3];
-        sportType =  b[5];
+        team1 = b[3];
+        team2 = b[4];
+        sportType =  b[6];
         teams.setText(team1 +" vs. "+ team2);
         sport.setText(sportType.toUpperCase());
-        matchId.setText("MID: "+b[0]);
+        groupChar.setText("Grp. "+b[1]);
         serverUrl = getArguments().getString("serverUrl");
         score.setText("0:0");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -242,7 +245,6 @@ public class ScoreboardFragment extends Fragment {
         }
         @Override
         protected String doInBackground(String... params) {
-            String serverUrl = params[0];
             String post_data = "";
             try {//TODo anpassen
                 URL url = null;

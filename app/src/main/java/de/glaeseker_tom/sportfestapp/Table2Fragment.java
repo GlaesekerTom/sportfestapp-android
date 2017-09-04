@@ -71,7 +71,7 @@ public class Table2Fragment extends Fragment {
             try {
                 URL url = new URL(serverUrl + "get_json_data.php");
                 String json_string;
-                String textparam = "sportname="+tableType+"_data";
+                String textparam = "sportname="+tableType+"_fixtures";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
@@ -118,7 +118,7 @@ public class Table2Fragment extends Fragment {
                     System.out.println(finalObject.toString());
                     MatchModel2 mm = new MatchModel2(finalObject.getString("matchId"), finalObject.getString("time"),
                             finalObject.getString("team1"), finalObject.getString("team2"), finalObject.getString("result"),
-                            tableType, finalObject.getString("referee"),finalObject.getString("gym"));
+                            tableType, finalObject.getString("referee"), finalObject.getString("gym"),finalObject.getString("groupChar"));
                     resultlist.add(mm);
                 }
                 if(resultlist.size() == 0){
@@ -188,7 +188,7 @@ public class Table2Fragment extends Fragment {
             TextView tv_Result = convertView.findViewById(R.id.tv_result);
             TextView tv_Referee = convertView.findViewById(R.id.tv_referee);
 
-            tv_MatchID.setText(matchModelList.get(position).getMatchID());
+            tv_MatchID.setText(matchModelList.get(position).getGroup());
             tv_Time.setText(matchModelList.get(position).getTime()+ " Uhr");
             tv_Teams.setText(matchModelList.get(position).getTeam1() +" vs. " + matchModelList.get(position).getTeam2());
             tv_Gym.setText("Halle: " + matchModelList.get(position).getGym());
@@ -199,15 +199,16 @@ public class Table2Fragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     MatchModel2 mm = matchModelList.get(position);
-                    String[] mmArray = new String[8];
+                    String[] mmArray = new String[9];
                     mmArray[0] = mm.getMatchID();
-                    mmArray[1] = mm.getTime();
-                    mmArray[2] = mm.getTeam1();
-                    mmArray[3] = mm.getTeam2();
-                    mmArray[4] = mm.getResult();
-                    mmArray[5] = mm.getSport();
-                    mmArray[6] = mm.getReferee();
-                    mmArray[7] = mm.getGym();
+                    mmArray[1] = mm.getGroup();
+                    mmArray[2] = mm.getTime();
+                    mmArray[3] = mm.getTeam1();
+                    mmArray[4] = mm.getTeam2();
+                    mmArray[5] = mm.getResult();
+                    mmArray[6] = mm.getSport();
+                    mmArray[7] = mm.getReferee();
+                    mmArray[8] = mm.getGym();
                     listener.onListFragmentInteraction(mmArray);
                 }
             });

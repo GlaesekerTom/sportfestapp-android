@@ -58,14 +58,21 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (fragmentManager.getBackStackEntryCount() > 1) {
+            drawer.openDrawer(GravityCompat.START);
+        }}
+            /*if (fragmentManager.getBackStackEntryCount() > 1) {
                 fragmentManager.popBackStack();
                 // super.onBackPressed();
                 // return;
-            } else {
-                if (doubleBackToExitPressedOnce) {
-                    fragmentManager.popBackStack();
-                    super.onBackPressed();
+            } else {*/
+                /*if (doubleBackToExitPressedOnce) {
+                    if(drawer.isDrawerOpen(GravityCompat.START)){
+                        drawer.closeDrawer(GravityCompat.START);
+                    }else{
+                        drawer.openDrawer(GravityCompat.START);
+                    }
+                    //fragmentManager.popBackStack();
+                    //super.onBackPressed();
                     return;
                 }
 
@@ -117,7 +124,6 @@ public class MainActivity extends AppCompatActivity
             System.out.println("super.onBackPressed()");
             super.onBackPressed();
         }*/
-    }
     //-------------------------------ActionBar-Menu-----------------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -250,7 +256,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(final String[] item) {
-        if(item[4].equals("-")) {
+        if(item[5].equals("-")) {
             startScoreboard(item);
         }else{
             if(permission > 1){
