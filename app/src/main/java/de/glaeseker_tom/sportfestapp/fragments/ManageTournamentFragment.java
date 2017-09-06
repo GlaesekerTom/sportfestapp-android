@@ -176,7 +176,7 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
         }
     }
 
-    public class SendTournamentData extends AsyncTask<String, String, String> {
+    private class SendTournamentData extends AsyncTask<String, String, String> {
 
         URL url;
 

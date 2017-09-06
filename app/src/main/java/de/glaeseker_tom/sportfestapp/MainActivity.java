@@ -2,6 +2,7 @@ package de.glaeseker_tom.sportfestapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -23,20 +24,23 @@ import de.glaeseker_tom.sportfestapp.fragments.MatchListFragment;
 import de.glaeseker_tom.sportfestapp.fragments.TotalPlacementFragment;
 
 /*
-* Die MainActivity dient als Container für alle Fragmente.
-* Der
+* Die MainActivity dient als Container für alle Fragmente und ist die Acitvity, welche die gesammte Zeit läuft.
+* Abgesehen vom Login und der Registrierung
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,MatchListFragment.OnListFragmentInteractionListener, ScoreboardFragment.OnFragmentInteractionListener{
 
     private android.support.v4.app.FragmentManager fragmentManager;
-    private String url = "http://192.168.20.30:80/sportfest/";
+    private String serverUrl;
     private int permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Holt die ServerUrl aus den SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key),MODE_PRIVATE);
+        serverUrl = sharedPreferences.getString("serverUrl","");
         //Erhält Benutzerberechtigung vom Server in AccountHandler und wird beim Start der Activity übergeben.
         permission = getIntent().getExtras().getInt("permission");
 
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     //----------------------Zurückbutton Event------------------------------------------------------
-    //Wird ausgeführt wenn der Zurückknopf gedrückt wurde. In meinem Fall öffnet bzw. schließt er nur den Navigation Drawer.
+    //Wird ausgeführt wenn der Zurückknopf gedrückt wurde. In diesem Fall öffnet bzw. schließt er den Navigation Drawer.
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -81,22 +85,27 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         //Überprüft, ob der Menüpunkt "Ausloggen" gedrückt wurde.
         if (id == R.id.action_logout) {
+            //Startet die LoginActivity
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
     //-------------------------Navigation Drawer Item Handler---------------------------------------
     //Legt fest, was bei welcher Auswahl im NavigationDrawer geschieht.
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Behandelt Navigationsauswahl
+        //Liefert die id des Prameters item.
         int id = item.getItemId();
+        //Entfernt alle Fragmente
         removeAllExistingFragments();
+        //Bundle wird dem Fragment übergeben, um wichtige Daten zu liefern.
         Bundle bundle = new Bundle();
-        bundle.putString("serverUrl",url);
+        bundle.putString("serverUrl", serverUrl);
+        //Neue Transaction wird erstellt.
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+        //Je nachdem, welches Item geklickt wurde, wird das entsprechende Fragment geladen.
         if (id == R.id.nav_soccer) {
             MatchListFragment frag = new MatchListFragment();
             bundle.putString("tableType","soccer");
@@ -131,7 +140,7 @@ public class MainActivity extends AppCompatActivity
             transaction.add(R.id.content_main,frag,"fragPlacement2");
         } else if (id== R.id.nav_total_placement){
             TotalPlacementFragment frag = new TotalPlacementFragment();
-            frag.setServerURL(url);
+            frag.setArguments(bundle);
             transaction.add(R.id.content_main,frag,"fragTotalPlacement");
         } else if (id == R.id.nav_managetournament) {
             //überprüft, ob die Berechtigungen für die Tuniererstellung vorhanden sind
@@ -144,15 +153,16 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         }
+        //Schließt die Transaction ab.
         transaction.commit();
 
-        //Nach dem eine Auswahl gemacht wurde wird NavigationBar wieder geschlossen
+        //Navigation Drawer wird wieder geschlossen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    //Entfernt alle existierenden Fragments
+    //Entfernt alle existierenden Fragments (Keine optimale Lösung)
     public void removeAllExistingFragments(){
         List<Fragment> fragmentlist = fragmentManager.getFragments();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -195,7 +205,7 @@ public class MainActivity extends AppCompatActivity
         removeAllExistingFragments();
         Bundle bundle = new Bundle();
         bundle.putStringArray("mm", item);
-        bundle.putString("serverUrl", url);
+        bundle.putString("serverUrl", serverUrl);
         ScoreboardFragment frag = new ScoreboardFragment();
         frag.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -204,12 +214,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(String s) {
+    public void onFragmentInteraction(String s) {
         removeAllExistingFragments();
         MatchListFragment frag = new MatchListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("tableType",s);
-        bundle.putString("serverUrl",url);
+        bundle.putString("serverUrl", serverUrl);
         frag.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.content_main, frag, "table" + s);

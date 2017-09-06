@@ -13,9 +13,14 @@
     <string name="login_et_username">Benutzername</string>
     <string name="login_et_password">Passwort</string>
     <string name="login_btn_login">Anmelden</string>
-    <string name="login_tv_go_registration">Noch kein Acount vorhanden.</string>
+    <string name="login_tv_go_registration">Noch kein Benutzerkonto vorhanden.</string>
     <string name="login_tv_go_registration_ac">Registrieren</string>
     <string name="login_cb_remember">Angemeldet bleiben</string>
+
+    <!---________________________SHARED PREFERENCE FILE__________________
+    String für den Dateinamen.
+    -->
+    <string name="preference_file_key">sportfestPreferences</string>
 
 
     <!--  ______________________REGISTRATION ACTIVITY_________________
@@ -28,7 +33,7 @@
     <string name="registration_et_password_repeat">Passwort wiederholen</string>
     <string name="registration_et_token">Token</string>
     <string name="registration_btn_register">Registrieren</string>
-    <string name="registration_tv_go_login">Es existiert bereits ein Acount?</string>
+    <string name="registration_tv_go_login">Es existiert bereits ein Benutzerkonto?</string>
     <string name="registration_tv_go_login_ac">Anmelden</string>
     <string name="registration_iv_content_description">KGS-Logo</string>
 
@@ -40,9 +45,6 @@
     <string name="fragment_matchlist_tv_gym">Halle: </string>
     <string name="fragment_matchlist_tv_result">Ergebnis: </string>
     <string name="fragment_matchlist_tv_referee">Schiedsrichter: </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- __________________________SCOREBOARD FRAGMENT____________________
     Strings für das Scoreboard-Fragment

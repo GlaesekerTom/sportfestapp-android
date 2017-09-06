@@ -27,11 +27,13 @@ import java.util.List;
 import de.glaeseker_tom.sportfestapp.R;
 import de.glaeseker_tom.sportfestapp.models.PlacementModel;
 
+/*
+* TotalPlacementFragment dient zur Anzeige der Gesamtplatzierung der einzelnen Klassen.
+ */
 public class TotalPlacementFragment extends Fragment {
 
 
-    private String serverUrl;// = "http://192.168.20.30:80/sportfest/";
-    private String tableType = "volleyball";
+    private String serverUrl;
     private ListAdapterTotalPlacement adapter;
     private ArrayList<PlacementModel> resultlist;
 
@@ -42,25 +44,25 @@ public class TotalPlacementFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_placement_content, container, false);
+        //ServerUrl wird bei der FragmentTransaction mitgeliefert und hier abgespeichert.
+        if(getArguments().getString("serverUrl") != null){
+            serverUrl = getArguments().getString("serverUrl");
+        }
         ListView lvPlacement = v.findViewById(R.id.pf_listview);
         resultlist = new ArrayList<>();
         adapter = new ListAdapterTotalPlacement(getActivity(), R.layout.placement_list_item, resultlist);
         lvPlacement.setAdapter(adapter);
+        //AsyncTask wird ausgeführt
         new GetJsonData().execute();
         return v;
     }
 
-    public void setServerURL(String pUrl){
-        serverUrl = pUrl;
-    }
 
-    public void setTableType(String pTableType){
-        tableType = pTableType;
-    }
+    /*
+    * AsyncTask zum Abruf der Gesamtplatzierungsliste vom Server
+     */
 
-
-
-    public class GetJsonData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
+    private class GetJsonData extends AsyncTask<String, String, ArrayList<PlacementModel>> {
 
         URL url;
 
@@ -76,8 +78,9 @@ public class TotalPlacementFragment extends Fragment {
         @Override
         protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
+                //Verbindungsaufbau und Postparameter werden übertragen.
                 /*String json_string;
-                String textparam = "sportname="+tableType+"_data";
+                String textparam = "sportname=total_placement";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
@@ -116,7 +119,7 @@ public class TotalPlacementFragment extends Fragment {
                 }
                 System.out.println("RESULTLIST:"+resultlist.toString());
 
-                JSONArray parentArray = parentObject.getJSONArray(tableType);
+                JSONArray parentArray = parentObject.getJSONArray("total_placement");
 
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
@@ -149,35 +152,18 @@ public class TotalPlacementFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-  /*  public interface OnListFragmentInteractionListener2 {
-        void onListFragmentInteraction(String[] item);
-    }*/
-
-  /*  @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener2) {
-            listener = (OnListFragmentInteractionListener2) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-*/
 }
 
+//Adapter für die ListView
 class ListAdapterTotalPlacement extends ArrayAdapter {
 
-    public List<PlacementModel> placementModelList;
+    private List<PlacementModel> placementModelList;
     private int resource;
     private LayoutInflater inflater;
-    //private PlacementFragmentContent.OnListFragmentInteractionListener2 listener;
-    public ListAdapterTotalPlacement(Context context, int resource, List<PlacementModel> objects){
-        //PlacementFragmentContent.OnListFragmentInteractionListener2 listener){
+    ListAdapterTotalPlacement(Context context, int resource, List<PlacementModel> objects){
         super(context,resource,objects);
         placementModelList = objects;
         this.resource = resource;
-        //this.listener = listener;
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -198,18 +184,6 @@ class ListAdapterTotalPlacement extends ArrayAdapter {
         tvPoints.setText(String.valueOf(placementModelList.get(position).getPoints()));
         tvGoalDifference.setText(placementModelList.get(position).getGoalDifference());
 
-        /*convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PlacementModel pm = placementModelList.get(position);
-                String[] pmArray = new String[8];
-                pmArray[0] = String.valueOf(pm.getPlacementId());
-                pmArray[1] = pm.getTeam();
-                pmArray[2] = String.valueOf(pm.getPoints());
-                pmArray[3] = pm.getGoalDifference();
-                listener.onListFragmentInteraction(pmArray);
-            }
-        });*/
         return convertView;
     }
 }

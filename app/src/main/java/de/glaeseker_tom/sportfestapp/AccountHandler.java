@@ -47,8 +47,10 @@ class AccountHandler extends AsyncTask<String, Void, String> {
         }
         try {
             //Verbindungsaufbau
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            if(httpURLConnection == null){
+            HttpURLConnection httpURLConnection;
+            if (url != null) {
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+            }else{
                 return null;
             }
             httpURLConnection.setRequestMethod("POST");

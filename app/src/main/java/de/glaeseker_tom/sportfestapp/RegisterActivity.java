@@ -1,8 +1,10 @@
 package de.glaeseker_tom.sportfestapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,18 +12,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 /*
 *Die RegisterActivity steuert die Register-Maske und erstellt ein Objekt des AccountHandlers,
-* welcher die Kommunikation mit dem Server aufnimmt.
+* welcher die Kommunikation mit dem Server für den Registrierungsprozess aufnimmt.
  */
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username, et_password, et_password_repeat;
-    private String urlString = "http://192.168.20.30:80/sportfest/";
+    private String serverUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        //Holt ServerUrl aus den SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key),MODE_PRIVATE);
+        serverUrl = sharedPreferences.getString("serverUrl","");
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
         et_password_repeat = (EditText) findViewById(R.id.et_password_repeat);
@@ -54,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
             if(password.equals(password_repeat)) {
                 //Neues Objekt des AccountHandlers und AsyncTask wird aufgerufen.
                 AccountHandler accountHandler = new AccountHandler(this);
-                accountHandler.execute(urlString, "register", username, password);
+                accountHandler.execute(serverUrl, "register", username, password);
             }else {
                 Toast.makeText(getApplicationContext(), "FEHLER: Passwörter stimmen nicht überein!", Toast.LENGTH_SHORT).show();
             }

@@ -24,5 +24,11 @@
     {"placementId":"2", "team":"9A2","points":"19","goalDifference":"10:32"},
     {"placementId":"3", "team":"7B3","points":"10","goalDifference":"10:23"},
     {"placementId":"4", "team":"7B3","points":"10","goalDifference":"10:23"}
+  ],
+  "total_placement":[
+    {"placementId":"1", "team":"9B2","points":"21","goalDifference":"10:23"},
+    {"placementId":"2", "team":"9A2","points":"19","goalDifference":"10:32"},
+    {"placementId":"3", "team":"7B3","points":"10","goalDifference":"10:23"},
+    {"placementId":"4", "team":"7B3","points":"10","goalDifference":"10:23"}
   ]
 }
