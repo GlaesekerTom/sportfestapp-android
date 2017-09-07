@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -69,7 +70,8 @@ public class TotalPlacementFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             try {
-                url = new URL(serverUrl + "get_json_data.php");
+                url = new URL(serverUrl + "Gesamtergebnis.php");
+                //url = new URL(serverUrl + "Gesamtergebnis.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -79,13 +81,13 @@ public class TotalPlacementFragment extends Fragment {
         protected ArrayList<PlacementModel> doInBackground(String... params) {
             try {
                 //Verbindungsaufbau und Postparameter werden übertragen.
-                /*String json_string;
-                String textparam = "sportname=total_placement";
+                String json_string;
+                //String textparam = "";sportname=total_placement";
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
-                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.setConnectTimeout(2000);
-                httpURLConnection.getOutputStream().write(textparam.getBytes("UTF-8"));
+                //httpURLConnection.getOutputStream().write(textparam.getBytes("UTF-8"));
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
                 StringBuilder stringBuilder = new StringBuilder();
@@ -96,36 +98,39 @@ public class TotalPlacementFragment extends Fragment {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 String finalJson = stringBuilder.toString().trim();
-                System.out.println("finalJson:"+finalJson);*/
+                System.out.println("finalJson:"+finalJson);
 
-                InputStream is = getResources().openRawResource(R.raw.placement);
+                /*InputStream is = getResources().openRawResource(R.raw.placement);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
                 while(line != null)
+
                 {
-                    sb.append(line);
-                    line = br.readLine();
+                   sb.append(line);
+                  line = br.readLine();
                 }
-                String finalJson = sb.toString();
-                JSONObject parentObject = new JSONObject(finalJson);
-                if (parentObject.names().get(0).equals("error")) {
+                String finalJson = sb.toString();*/
+
+                JSONArray parentArray = new JSONArray(finalJson);
+
+                /*if (parentObject.names().get(0).equals("error")) {
                     System.out.println("------------- JSON ERROR: " + parentObject.get("error").toString());
                     return null;
-                }
+                }*/
                 for (int i = 0; i < resultlist.size(); i++) {
                     resultlist.remove(i);
                     adapter.notifyDataSetChanged();
                 }
-                System.out.println("RESULTLIST:"+resultlist.toString());
+               // System.out.println("RESULTLIST:"+resultlist.toString());
 
-                JSONArray parentArray = parentObject.getJSONArray("total_placement");
+                //JSONArray parentArray = parentObject.getJSONArray("total_placement");
 
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     System.out.println(finalObject.toString());
-                    PlacementModel mm = new PlacementModel(Integer.parseInt(finalObject.getString("placementId")), finalObject.getString("team"),
-                            Integer.parseInt(finalObject.getString("points")), finalObject.getString("goalDifference"));
+                    PlacementModel mm = new PlacementModel(i+1, finalObject.getString("Mannschaft"),
+                            Integer.parseInt(finalObject.getString("Punkte")), finalObject.getString("Torverhaeltnis"));
                     resultlist.add(mm);
                 }
                 if(resultlist.size() == 0){

@@ -45,6 +45,7 @@
             android:textColorHint="@android:color/white" />
 
         <EditText
+            android:fontFamily="sans-serif"
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
             android:textColorHint="@android:color/white" />
 
         <EditText
+            android:fontFamily="sans-serif"
             android:id="@+id/et_password_repeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

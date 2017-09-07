@@ -38,6 +38,10 @@ import java.util.List;
 import de.glaeseker_tom.sportfestapp.R;
 import de.glaeseker_tom.sportfestapp.models.TeamModel;
 
+/*Fragment zur Erstellung eines neuen Turniers
+* Es können Teams, eine Startzeit eine Endzeit und eine Spieldauer übergeben werden.
+*/
+
 public class ManageTournamentFragment extends Fragment implements View.OnClickListener {
 
     private String serverUrl;
@@ -183,7 +187,7 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
         @Override
         protected void onPreExecute() {
             try {
-                url = new URL(serverUrl + "setupTournament.php");
+                url = new URL(serverUrl + "Sportfest_erstellen.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -204,7 +208,7 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
                 jsof.put("teams",jsa);
                 System.out.println(jsof.toString());
                 String json_string;
-                String textparam = "startTime="+startTime+"&endTime="+endTime+"&matchTime="+matchTime+"&teams="+jsof.toString();
+                String textparam = "startZeit="+startTime+"&endZeit="+endTime+"&spielZeit="+matchTime+"&teams="+jsof.toString();
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
@@ -221,8 +225,7 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
                 inputStream.close();
                 httpURLConnection.disconnect();
                 String finalJson = stringBuilder.toString().trim();
-                System.out.println("finalJson:" + finalJson);
-
+                //System.out.println("finalJson:" + finalJson);
                /* InputStream is = getResources().openRawResource(R.raw.teams);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder sb = new StringBuilder();
@@ -264,10 +267,10 @@ public class ManageTournamentFragment extends Fragment implements View.OnClickLi
 
 class ListAdapterTournament extends ArrayAdapter {
 
-        public List<TeamModel> teamModelList;
+        List<TeamModel> teamModelList;
         private int resource;
         private LayoutInflater inflater;
-        public ListAdapterTournament(Context context, int resource, ArrayList<TeamModel> objects){
+        ListAdapterTournament(Context context, int resource, ArrayList<TeamModel> objects){
             super(context,resource,objects);
             teamModelList = objects;
             this.resource = resource;

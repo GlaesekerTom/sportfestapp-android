@@ -15,7 +15,7 @@
     <string name="login_btn_login">Anmelden</string>
     <string name="login_tv_go_registration">Noch kein Benutzerkonto vorhanden.</string>
     <string name="login_tv_go_registration_ac">Registrieren</string>
-    <string name="login_cb_remember">Angemeldet bleiben</string>
+    <string name="login_cb_remember">Benutzerdaten merken</string>
 
     <!---________________________SHARED PREFERENCE FILE__________________
     String für den Dateinamen.

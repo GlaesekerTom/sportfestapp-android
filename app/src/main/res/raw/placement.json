@@ -1,4 +1,5 @@
-{
+[{"Mannschaft":"10F3","Punkte":"12","Torverhaeltnis":"40:20"},{"Mannschaft":"10D3","Punkte":"6","Torverhaeltnis":"20:40"}]
+/*
   "volleyball":[
   {"placementId":"1", "team":"10D3","points":"23","goalDifference":"10:23"},
   {"placementId":"2", "team":"9A2","points":"23","goalDifference":"10:23"},
@@ -31,4 +32,4 @@
     {"placementId":"3", "team":"7B3","points":"10","goalDifference":"10:23"},
     {"placementId":"4", "team":"7B3","points":"10","goalDifference":"10:23"}
   ]
-}
+}*/
